@@ -22,6 +22,7 @@ R1 uses active-session agents. Test explicit pause at review/missing inputs and 
 
 ## Skill and workflow traceability
 
+Required combined-flow check: inspect actual tool receipts or authored deliverables, their pinned input/output versions, and the downstream stage that consumes each relevant skill output. Catalog presence and selected names alone fail this check. Verify the full applicable chain in the pilot, from researched brief/hooks through approved production artifacts and manual-upload packaging. Chapter/Shorts applicability depends on format and source transcript; comments/retention/audits require real post-release data and remain a later feedback gate for an unpublished pilot. Record reasons for exclusions rather than manufacturing irrelevant outputs.
 Every content task must persist a handoff containing selected skills with reasons, required/provided/missing inputs, intended output types and paths, exact source versions/hashes, diagram stage, tool requirements, unresolved conflicts, creative gates, and allowance scope. Catalog presence alone is not execution. Do not force every skill into one film.
 
 | Capability | Relevant skills and inputs | Required output / verification |

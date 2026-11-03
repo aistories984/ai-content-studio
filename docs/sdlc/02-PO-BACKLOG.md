@@ -41,6 +41,7 @@ Story: As creator, I describe a project and receive the next permissible task an
 
 - [ ] Persist topic/audience, purpose, Short/long format, duration, style/constraints; require each project's format/runtime rather than global defaults. Channel profile is optional in R1.
 - [ ] Consider both catalogs; record selected skill paths/hashes, reasons, required/provided/missing inputs, outputs, tools, source pins and creative/spend gates. Do not select irrelevant skills merely to fill a list.
+- [ ] Persist actual execution/authored-output evidence for applicable YouTube skills and link resulting artifact versions to their downstream stage/consumer. SDET must reject a handoff that merely lists installed skills without using their outputs. Justify nonapplicable or deferred skills explicitly.
 - [ ] Expose missing voice/examples, research, media/tools and unsupported automation; block only dependent tasks and never fabricate these inputs.
 - [ ] Reload the same handoff and next action after active-session interruption; no unattended scheduler claim.
 

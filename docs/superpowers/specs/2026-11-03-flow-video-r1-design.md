@@ -53,6 +53,7 @@ Every revision preserves prior versions and invalidates only affected downstream
 
 ## Verification and definition of done
 
+- Required combined-flow evidence: for each applicable YouTube skill, retain the skill identity/version, actual tool execution or authored output, pinned input/output artifact IDs, and its downstream consumer. A selected skill name or installed folder alone does not count as execution. SDET verifies the chain from skill output into the next production/delivery stage; every omission is justified by format, missing prerequisites, or future-release scope. Use all eleven across their appropriate lifecycle, not indiscriminately in every video. Post-release comment/retention/audit work requires actual audience data and does not block an unpublished R1 pilot.
 - Keep the existing baseline suite/build green; add requirement-driven tests for changed behavior.
 - Verify missing inputs/capabilities, source changes, stale/expired leases, allowance exhaustion, changed settings, race conditions and interruption points. Tests use temporary project data and do not spend credits.
 - Browser fixtures prove local adapter behavior; they never count as provider E2E.

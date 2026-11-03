@@ -32,6 +32,7 @@ Supporting goals:
 - Remaining product work: design/implement Flow film/YouTube adapter, autonomous task routing, rendered Shorts/final cuts, and posting integrations. Creator voice, niche/audience, and paid offer still require real user inputs. No paid generation or posting has occurred.
 - Next step: user review of proposed `docs/superpowers/specs/2026-11-03-flow-video-r1-design.md` and `docs/sdlc/02-PO-BACKLOG.md`, then detailed implementation plan and ticket execution. First sprint is login-independent contracts/intake/state/allowance work; real Flow steps wait for signed-in browser, approved creative assets and exact allowance.
 - Read this handoff first on resume; inspect linked docs and targeted code only as needed. Do not repeat completed audits.
+- Latest clarification: YouTube skills must actually contribute outputs consumed by the production flow. Updated R1 design, PO R1-002, SDET traceability and AGENTS with execution/output evidence plus downstream artifact links. This strengthens acceptance criteria; it does not claim automation has been implemented.
 
 ## Daily activity
 
@@ -88,3 +89,4 @@ Supporting goals:
 - Resolved reported localhost connection refusal: no server was listening. Initial launch was blocked from binding by the sandbox; relaunched with approved network permissions. Director Studio is running on 127.0.0.1:8767 in exec session 98401 (process 31105). This is a foreground session, not a login/startup service; restart START_STUDIO.sh if it stops. No application code changed.
 
 - SDLC planning request: dispatched separate BA, PO, Developer-architecture and SDET agents; produced requirements, 14-ticket prioritized backlog with dependency/acceptance traceability, architecture, verification strategy and agenda. User chose active-session approach A, per-project Short/long/duration and manual uploads for R1; future multi-account publishing recorded. Created central R1 Flow film design, had a fresh builder check it, and resolved one BA wording inconsistency. Checked official Flow creation/download/model/credit documentation; no live account/model access or credits used. App code and existing 56-test baseline unchanged. All new tickets are Draft/design-review or Blocked; no false build/test/provider completion.
+- User reiterated actual YouTube-skill use across the whole automation. Made execution/authored-output evidence and downstream consumption mandatory in the design, R1-002 ticket and SDET plan; updated instructions and decisions. Documentation only, no new code or provider execution.
