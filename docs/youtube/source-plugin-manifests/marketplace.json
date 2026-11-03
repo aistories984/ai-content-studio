@@ -1,0 +1,17 @@
+{
+  "name": "youtube-agent-skill",
+  "description": "The YouTube agent skill pack for Codex",
+  "owner": {
+    "name": "Jake Schincariol",
+    "url": "https://opusjake.ai"
+  },
+  "plugins": [
+    {
+      "name": "youtube-agent",
+      "description": "Eleven Codex skills that run a YouTube channel, including a scored hook panel, a title and thumbnail linter, an edit decision list, a retention reader and a virality engine.",
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/Jakeschincariol/youtube-agent-skill"
+    }
+  ]
+}
