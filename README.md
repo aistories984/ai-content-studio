@@ -1,5 +1,14 @@
 # AI Approval Workflow Dash
 
+## Combined project status
+
+This private workspace combines Director Studio with 11 YouTube skills under `.agents/skills/` (13 skills total). Both source license notices are preserved; see `LICENSE` and `licenses/youtube-skills-LICENSE`.
+
+Read [WORK_LOG.md](WORK_LOG.md) first for the goal and handoff. See [the integration design](docs/superpowers/specs/2026-11-02-unified-foundation-design.md) and [YouTube capabilities](REPO_OVERVIEW.md).
+
+Source consolidation is complete; automated YouTube orchestration, a Google Flow film adapter, and publishing are not implemented. Existing upstream film and sprite behavior is preserved. No application tests or production build have been run in this workspace yet.
+
+
 Director Studio is a local AI video-production dashboard with versioned artifacts, prompts beside previews, human approval gates, scene direction, scratch audio, a rough-cut timeline, and a reusable CLI/MCP agent interface.
 
 Choose **Film** or **Game sprites** when creating a project. Both modes preserve exact artifact versions, show prompts beside outputs, and wait for human approval between stages.
