@@ -20,7 +20,7 @@ Supporting goals:
 
 ## Current handoff
 
-- GitHub publication: user renewed authorization to push all prepared sources and notes to `https://github.com/aistories984/ai-content-studio.git`. Destination privacy and push permission were verified previously. Upload and remote verification are in progress.
+- GitHub publication: user explicitly changed the destination to public and renewed authorization to push all prepared work to `https://github.com/aistories984/ai-content-studio.git`. Upload pending; prior attempts were declined before execution.
 - Resume here: read this section first. Do not repeat the repository audit; consult `INTEGRATION_REVIEW.md` and the design only as needed. Read code when required for the actual implementation.
 - Latest goal clarification: prioritize a trend-to-video/Short-to-publishing-preparation workflow supporting audience growth and revenue. Always select and follow relevant skills; document missing capabilities. Actual automated posting and finished media production still need implementation and explicit tool choices.
 - Latest provider decision: Google Flow for film/YouTube generation. Adapt the Wan-specific diagram handoff while preserving its structure and controls. Upstream Flow implementation handles sprites only; film/YouTube Flow integration is not built. Require both-source capability selection per content task and careful credit/attempt accounting.
@@ -76,3 +76,7 @@ Supporting goals:
 - User supplied a commit email. Updated project-local Git email configuration and verified it; existing commit retains its original noreply author. Did not store the supplied email in tracked notes. Push remains paused after the declined permission prompt.
 
 - User explicitly renewed push authorization. Included the latest handoff updates in a follow-up commit; pushing the complete prepared source snapshot and original architect history to the private origin. Functional automation and app validation remain pending.
+
+- Saved follow-up commit e5372aa including latest handoff and original skill-pack plugin manifests (archived as references). Renewed `git push -u origin master` permission prompt was rejected by user before execution. Nothing uploaded; local source commits remain ready.
+
+- User stated the GitHub repository is now public and requested the push again. Public visibility supersedes the earlier private preference for this destination. Included latest log updates in preparation; upload not yet verified.
