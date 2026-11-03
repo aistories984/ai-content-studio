@@ -23,10 +23,11 @@ def parse_ts(s):
     return int(p[0]) * 3600 + int(p[1]) * 60 + float(p[2]) if len(p) == 3 else int(p[0]) * 60 + float(p[1])
 
 def load(path):
-    raw = open(path, encoding="utf-8", errors="replace").read()
+    with open(path, encoding="utf-8", errors="replace") as source:
+        raw = source.read()
     if path.endswith(".json"):
         d = json.loads(raw)
-        segs = d.get("segments", d if isinstance(d, list) else [])
+        segs = d if isinstance(d, list) else d.get("segments", [])
         return [(float(s["start"]), float(s["end"]), (s.get("text") or "").strip()) for s in segs]
     cues, cur = [], None
     for line in raw.splitlines():

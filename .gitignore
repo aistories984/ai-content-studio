@@ -11,3 +11,6 @@ studio-data/
 /request.json
 *.log
 *.tsbuildinfo
+
+# Project-local runtimes, caches, and browser test dependencies
+.tools/

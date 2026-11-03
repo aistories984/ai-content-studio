@@ -2,11 +2,11 @@
 
 ## Combined project status
 
-This private workspace combines Director Studio with 11 YouTube skills under `.agents/skills/` (13 skills total). Both source license notices are preserved; see `LICENSE` and `licenses/youtube-skills-LICENSE`.
+This repository combines Director Studio with 11 YouTube skills under `.agents/skills/` (13 skills total). Both source license notices are preserved; see `LICENSE` and `licenses/youtube-skills-LICENSE`.
 
 Read [WORK_LOG.md](WORK_LOG.md) first for the goal and handoff. See [the integration design](docs/superpowers/specs/2026-11-02-unified-foundation-design.md) and [YouTube capabilities](REPO_OVERVIEW.md).
 
-Source consolidation is complete; automated YouTube orchestration, a Google Flow film adapter, and publishing are not implemented. Existing upstream film and sprite behavior is preserved. No application tests or production build have been run in this workspace yet.
+Source consolidation is complete. The six YouTube tools and their shared-artifact handoff into Director Studio are covered by automated tests. See [combined validation](docs/COMBINED_VALIDATION.md) and [how to use both sources](docs/youtube/WORKFLOW.md). Automated YouTube orchestration, a Google Flow film adapter, and publishing are not implemented.
 
 
 Director Studio is a local AI video-production dashboard with versioned artifacts, prompts beside previews, human approval gates, scene direction, scratch audio, a rough-cut timeline, and a reusable CLI/MCP agent interface.
@@ -21,11 +21,37 @@ The film workflow connects premise, a 10-page comic, screenplay, measured tempor
 
 ## Open the studio
 
+### macOS / Linux setup
+
+From a fresh checkout, install Python 3.11+ and Node.js 22+, then run:
+
+```bash
+git clone https://github.com/aistories984/ai-content-studio.git
+cd ai-content-studio
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-lock.txt
+npm ci
+npm run build
+./START_STUDIO.sh
+```
+
+Check `python3 --version` first: macOS's system Python 3.9 is too old. On this prepared Mac checkout, Python 3.12 and Node 22 are installed under ignored `.tools/`, with Python dependencies in `.venv/`. The launcher finds the local Node/media binaries automatically. For manual build commands here, first run `export PATH="$PWD/.tools/node/bin:$PATH"`.
+
+Open `http://127.0.0.1:8767`. The server runs in the foreground; Ctrl+C stops it. Runtime data stays in `studio-data/` unless `DIRECTOR_DATA` is set. Do not expose this single-user local server publicly.
+
+FFmpeg and FFprobe are required for sprite extraction and non-WAV media inspection. This prepared checkout has ARM Mac binaries under `.tools/media/node_modules/@ffmpeg-installer/darwin-arm64/` and `.tools/media/node_modules/@ffprobe-installer/darwin-arm64/`. On another machine, install both for its platform and put them on PATH. The Python lock now installs `pywin32` only on Windows.
+
+Windows System.Speech synthesis does not run on macOS/Linux. Provide compatible WAV recordings with `audio_file` for measured timing; no substitute voice provider is silently selected.
+
+Open this **repository root** in Codex to discover its project-local skills. Read [the combined workflow](docs/youtube/WORKFLOW.md) for skill selection, creator voice setup, shared CLI handoffs, and current limits. No global Claude plugin, API key, or paid generation is needed for local validation.
+
+### Windows setup
+
 Clone the repository on Windows, then start the local app:
 
 ```powershell
-git clone https://github.com/Perfectz/ai-approval-workflow-dash.git
-cd ai-approval-workflow-dash
+git clone https://github.com/aistories984/ai-content-studio.git
+cd ai-content-studio
 .\START_STUDIO.ps1
 ```
 

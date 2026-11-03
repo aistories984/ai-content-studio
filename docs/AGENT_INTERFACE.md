@@ -4,6 +4,8 @@ Any agent with local shell access can use the CLI. MCP clients can use the same 
 
 ## CLI
 
+On macOS/Linux use `.venv/bin/python` instead of the Windows interpreter path below. For example, `.venv/bin/python -m studio.cli list_projects`. All clients must share the same `DIRECTOR_DATA`. YouTube skill selection and supporting-artifact handoffs are documented in [the combined playbook](youtube/WORKFLOW.md).
+
 Run from this repository:
 
 ```powershell

@@ -1,0 +1,51 @@
+const { chromium } = require('../.tools/browser/node_modules/playwright');
+const { spawn } = require('node:child_process');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+(async () => {
+  const probe = require('node:net').createServer();
+  await new Promise(resolve => probe.listen(0, '127.0.0.1', resolve));
+  const port = probe.address().port;
+  await new Promise(resolve => probe.close(resolve));
+  const base = `http://127.0.0.1:${port}`;
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'content-studio-smoke-'));
+  const log = fs.openSync('.tools/browser-server.log', 'w');
+  const server = spawn('.venv/bin/python', ['-m','uvicorn','studio.app:app','--host','127.0.0.1','--port',String(port)], {env:{...process.env,DIRECTOR_DATA:directory,DIRECTOR_NO_SEED:'1'},stdio:['ignore',log,log]});
+  let browser;
+  try {
+    let ready=false;
+    for(let i=0;i<80;i++) {if(server.exitCode!==null)throw new Error('Temporary server exited; see .tools/browser-server.log');try {const r=await fetch(`${base}/api/session`); if(r.ok){ready=true;break;}}catch{} await new Promise(r=>setTimeout(r,100));}
+    assert(ready,'Temporary server did not start');
+    browser=await chromium.launch({headless:true});
+    const page=await browser.newPage({viewport:{width:1440,height:1000}});
+    const errors=[];page.on('pageerror',e=>errors.push(e.message));
+    await page.goto(`${base}/`);
+    await page.getByRole('button',{name:/new project/i}).first().click();
+    await page.getByPlaceholder('The working title of your film').fill('Combined workflow browser fixture');
+    await page.getByPlaceholder('Audience, genre, emotional journey, constraints…').fill('Synthetic UI check; no production approval or paid generation.');
+    await page.getByRole('button',{name:'Create project',exact:true}).click();
+    await page.getByText('Combined workflow browser fixture',{exact:true}).first().waitFor();
+    const projects=await (await fetch(`${base}/api/projects`)).json();
+    assert.equal(projects.length,1);const id=projects[0].id;
+    const python=`import json\nfrom studio import agent_tools as t\np=${JSON.stringify(id)}\nc=t.claim_task(p,'browser-fixture')\nv=t.register_artifact(p,{'title':'YouTube hook evidence','kind':'notes','stage':'premise','content':'Fixture hook panel from yt-script.','prompt':'Synthetic combined workflow check.','inputs':[],'metadata':{'skills':['yt-script'],'fixture':True},'task_id':c['task_id'],'task_token':c['token']})\nt.submit_for_review(v['version_id'],c['task_id'],c['token'])\nt.finish_task(c['task_id'],c['token'])\n`;
+    await new Promise((resolve,reject)=>{const p=spawn('.venv/bin/python',['-c',python],{env:{...process.env,DIRECTOR_DATA:directory},stdio:['ignore','ignore','pipe']});let err='';p.stderr.on('data',x=>err+=x);p.on('exit',code=>code===0?resolve():reject(new Error(err)));});
+    await page.reload();
+    await page.getByText('YouTube hook evidence',{exact:true}).first().waitFor();
+    await page.getByText('YouTube hook evidence',{exact:true}).first().click();
+    await page.getByText('Fixture hook panel from yt-script.',{exact:true}).first().waitFor();
+    const prompt = page.getByRole('textbox', {name:'Generation prompt', exact:true});
+    assert(await prompt.isVisible());
+    assert.equal(await prompt.inputValue(), 'Synthetic combined workflow check.');
+    await page.screenshot({path:'.tools/dashboard-smoke-desktop.png',fullPage:true});
+    await page.setViewportSize({width:390,height:844});
+    await page.screenshot({path:'.tools/dashboard-smoke-mobile.png',fullPage:true});
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true,'Mobile horizontal overflow');
+    assert.deepEqual(errors,[]);
+    const project=await (await fetch(`${base}/api/projects/${id}`)).json();
+    assert.equal(project.stage_status[0].complete,false);
+    assert.equal(project.artifacts[0].latest.status,'in_review');
+    console.log('PASS: dashboard project creation, shared-agent notes handoff, artifact preview, pending human review, desktop/mobile layout; no browser errors.');
+  } finally {if(browser)await browser.close(); if(server.exitCode===null){server.kill('SIGTERM'); await new Promise(r=>server.once('exit',r));} fs.closeSync(log);fs.rmSync(directory,{recursive:true,force:true});}
+})().catch(e=>{console.error(e);process.exitCode=1;});

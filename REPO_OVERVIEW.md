@@ -31,7 +31,7 @@ It is not a complete video-generation application. It does not itself generate f
 - `skills/yt-viral/swipe.py`: ranks videos against their own channel's median views.
 - `templates/voice.md`: template for the creator's audience, speaking style, preferences, and boundaries. Many skills look for a filled profile at `~/.codex/youtube/voice.md`.
 
-The README describes the six Python tools as Python 3 scripts with no third-party dependencies. This overview is based on the README and skill instructions; the tools were not executed for this inventory.
+The six YouTube Python tools require no third-party dependencies. Their CLI behavior and a real Director Studio handoff are now exercised by `tests/test_youtube_tools.py`; see `docs/COMBINED_VALIDATION.md` for results and remaining limits. Paths in this source inventory that begin with `skills/` correspond to `.agents/skills/` in the unified repository; the voice template is `templates/youtube/voice.md`.
 
 ## Connection to our mission
 

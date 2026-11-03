@@ -20,26 +20,16 @@ Supporting goals:
 
 ## Current handoff
 
-- GitHub publication: user explicitly changed the destination to public and renewed authorization to push all prepared work to `https://github.com/aistories984/ai-content-studio.git`. Push succeeded to origin/master. Verified remote SHA matches local commit 313e70e31592ecd0d9bf0185c58176365f2f40be. Prior attempts were declined before execution.
-- Resume here: read this section first. Do not repeat the repository audit; consult `INTEGRATION_REVIEW.md` and the design only as needed. Read code when required for the actual implementation.
-- Latest goal clarification: prioritize a trend-to-video/Short-to-publishing-preparation workflow supporting audience growth and revenue. Always select and follow relevant skills; document missing capabilities. Actual automated posting and finished media production still need implementation and explicit tool choices.
-- Latest provider decision: Google Flow for film/YouTube generation. Adapt the Wan-specific diagram handoff while preserving its structure and controls. Upstream Flow implementation handles sprites only; film/YouTube Flow integration is not built. Require both-source capability selection per content task and careful credit/attempt accounting.
-- Status: source consolidation prepared in `` for requested GitHub backup; functional integration is not implemented. All 13 skill folders and supporting files are present alongside the existing app.
-- Available here: 11 YouTube skills, supporting Python tools, and templates.
-- Architect source: https://github.com/Perfectz/ai-approval-workflow-dash.git, cloned into `` at `cb522d8`; diagram files included.
-- Decision: user selected A, Director Studio as foundation. User requests clarification for material uncertainty and SDET-style validation against the plan, while retaining the business goal.
-- Required film path: user-supplied diagram, preserved at `docs/design/user-required-workflow.json`; all 11 skills must support it, not bypass its stages. Stage/skill map and diagram acceptance checks added to the foundation design.
-- Next action: review/approve foundation design at `docs/superpowers/specs/2026-11-02-unified-foundation-design.md`, then write implementation plan and build. Python/Node compatibility needs setup before app validation.
-- User preference: keep a concise daily record of all meaningful work. Read this file first to resume with minimal context; consult other files only as needed.
-- Detailed ideas: `THOUGHTS_AND_PLANS.md`.
-- Repository capabilities: `REPO_OVERVIEW.md` (all 11 skills, their inputs/outputs, tools, and limits).
-- Agreed scope: use and improve the full skills workflow; stage map and information requirements are in `THOUGHTS_AND_PLANS.md`. Skills can be used before repository integration when their inputs are available.
-- Review findings and proposed business milestones: see the architect's review in `THOUGHTS_AND_PLANS.md`. Main unresolved choice: who pays for what. Orchestration/media production are future capabilities; repository integration is not yet done.
-- Local folder is not currently a Git working tree (`git diff --check` reported this); version-control setup needs inspection when preparing integration.
-- Latest user confirmation: the supplied picture shows the same 12-step film workflow as the supplied JSON. Preserve that path and all four controls; YouTube skills augment it. This confirms the workflow requirement, not approval of the entire foundation design.
-- Exact stopping point: source consolidation uploaded to GitHub master and verified. Revised functional design remains ready for review. No implementation plan, application behavior changes, dependency installation, or application validation completed.
-- Canonical project: this Git repository. The outer source folder is a reference copy.
-- On resume: briefly state this status, resolve approval of the revised foundation scope, then write the implementation plan and proceed through engineering and SDET checks. Do not call the integration or automation complete before evidence exists.
+- Canonical working project: this `architect-repo` Git checkout, origin `https://github.com/aistories984/ai-content-studio.git` (user made it public). Architect history remains under the `upstream` remote.
+- Status as of November 3, 2026: both sources consolidated; local runtime/setup and supporting-artifact integration verified. All 13 skills are present. Full autonomous production is not implemented.
+- Verified: 56 Python tests pass with no skips, six YouTube CLIs exercised, real stdio MCP handoff, production frontend build, Chromium desktop/mobile project/artifact/prompt/review smoke test, and unchanged user diagram. See `docs/COMBINED_VALIDATION.md`.
+- Fixed: Windows-only pywin32 lock entry blocked Mac installation; thumbnail linter missed four-word text; Whisper list JSON crashed. Regression tests cover tool fixes.
+- Run locally: `./START_STUDIO.sh`; uses `.venv/bin/python`. Ignored `.tools/` contains Python 3.12, Node 22, media binaries, and browser test tooling. Manual build/test PATH instructions are in README.
+- Combined usage: `docs/youtube/WORKFLOW.md`. Open this repository root in Codex. Select relevant skills from both sources, use shared CLI/MCP artifact handoffs, and retain human review. Global Claude plugin installation is unnecessary for this checkout.
+- Required film path: supplied diagram at `docs/design/user-required-workflow.json`. Google Flow is selected for future video generation; existing Flow support is sprite-only, while film still exports Wan packages. Do not use Wan silently or spend credits.
+- Remaining product work: design/implement Flow film/YouTube adapter, autonomous task routing, rendered Shorts/final cuts, and posting integrations. Creator voice, niche/audience, and paid offer still require real user inputs. No paid generation or posting has occurred.
+- Next step: choose the first demonstration video/workflow and design the Flow film handoff against actual account/tool capabilities. Existing foundation design is in `docs/superpowers/specs/2026-11-02-unified-foundation-design.md`; today's fixes are maintenance and validation, not completion of that larger product.
+- Read this handoff first on resume; inspect linked docs and targeted code only as needed. Do not repeat completed audits.
 
 ## Daily activity
 
@@ -82,3 +72,11 @@ Supporting goals:
 - User stated the GitHub repository is now public and requested the push again. Public visibility supersedes the earlier private preference for this destination. Included latest log updates in preparation; upload not yet verified.
 
 - Git push succeeded to origin/master; remote readback matched local SHA 313e70e31592ecd0d9bf0185c58176365f2f40be and working tree was clean. Published Director Studio history/app, all 13 skills, supporting resources/licenses, supplied diagram, and project plans/notes. Recording verified upload in a follow-up documentation commit.
+
+### 2026-11-03
+
+- Read both supplied setup descriptions, canonical README/AGENTS and handoff. Installed project-local uv, Python 3.12.16, Node 22.23.4 (official archive/SHA-256), 32 locked Python packages, locked frontend dependencies, FFmpeg/FFprobe, and isolated Playwright/Chromium test tooling. Nothing installed into global agent settings.
+- Reproduced Mac lock failure; added Windows-only marker to pywin32. Added nine YouTube/combined checks, observed thumbnail threshold failure and Whisper-list parser exception, fixed them, and reran green.
+- Original suite: 47 tests, two media skips. With media tools and new tests: 56 tests pass, no skips. Frontend build passes. Dependency compatibility check passes. Browser smoke uses disposable project data and confirms project creation, shared-agent artifact display, prompt, review state, no horizontal mobile overflow/page errors. No user project approvals or paid operations.
+- Added START_STUDIO.sh, repeatable scripts/check_dashboard.cjs, combined usage playbook, validation report, and Mac setup/CLI instructions. Preserved stage definitions and diagram. Independently reviewed: no critical/important findings; added explicit prompt visibility/value assertion to address one minor evidence gap.
+- Runtime files/caches and test screenshots/logs are ignored under .tools/. User data remains excluded. Native Windows voice synthesis, Flow film generation, autonomous orchestration, rendered Shorts, and publishing remain unverified/unimplemented as documented.
