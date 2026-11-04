@@ -20,6 +20,14 @@ The intended product is a unified agent framework for video production, automati
 
 ## Ideas and daily notes
 
+### November 3, 2026 — One studio, different channels and content types
+
+User clarified the first niche question: the product must support multiple channels with different subjects/content, rather than being fixed to one niche. Broad discovery across categories should be an option. Research should identify evidence-backed opportunities and original angles, then a selected idea becomes a concrete channel/project brief and follows the full Director Studio diagram with relevant YouTube skills. Future saved channel profiles and publishing destinations must remain separate. The objective is a useful revenue-supporting all-in-one studio; no topic or tool guarantees viral reach or income. This clarifies the existing multi-channel goal; it does not mark profile management, monitoring or publishing complete. No particular production topic was selected.
+
+### November 3, 2026 — Research first, then selected idea into Studio
+
+Desired interaction: ask the agent to find current standout content and explain promising ideas; select one; then create the video using the YouTube skills and the complete AI Director Studio diagram. Keep up with fresh content over time. On-demand active-session research is possible now; recurring monitoring/notifications and the fully connected media/Flow pipeline remain future implementation. Preserve source URLs, observed metrics/date and ranking limits; create original content from the selected angle. First research niche/audience has been requested and is not yet specified.
+
 ### November 3, 2026 — Golden rule for every production
 
 The full AI Director Studio diagram and the relevant YouTube skills must work together whenever we create a video. Preserve every diagram obligation, with Google Flow as the agreed provider replacement for Wan. Actual outputs and their use downstream are required; installed skills, selected names or passing local tests alone do not prove a finished production system. Keep unfinished stages visible and require real-video SDET acceptance before declaring full automation. The compliance matrix and acceptance checklist are in `REMAINING_BUILD_PLAN.md`.

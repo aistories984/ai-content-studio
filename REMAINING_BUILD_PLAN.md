@@ -6,11 +6,36 @@ Last updated: November 3, 2026. Read this with the **Current handoff** in `WORK_
 
 Combine Director Studio and the YouTube skills into a working brief-to-video system following the full supplied film diagram. Use Google Flow for video generation. Release 1 ends with real downloaded takes, an accepted final video and a portable delivery bundle; the user uploads manually. Multi-account publishing is a later release. Growth and revenue are measured goals, not guaranteed outcomes.
 
-- Current branch: `feature/flow-video-automation`, based on master `2cf5f5e`. User committed the implementation/plans as `b03143f`; branch publication was explicitly requested and verified on GitHub at that commit. New publication notes remain local/uncommitted. Inspect actual Git state on resume; do not assume the implementation is still uncommitted.
+- Current branch: `feature/flow-video-automation`, based on master `2cf5f5e`. At this status review, local HEAD is `ef26697`, following `345b492` and `b03143f`; the tree was clean before this documentation update. Remote publication was previously verified at `b03143f`; newer remote/PR/merge state was not checked. Inspect actual Git state on resume.
 - Do not stage, commit, push, create a PR, merge, discard, or overwrite the user's work. User owns Git review/publication unless they explicitly authorize a particular action later.
 - Continue with active-session agents and durable saved state. An unattended worker is not implemented.
 - Preserve all twelve diagram obligations and human creative/spending gates. Select the relevant YouTube skills and retain actual outputs, receipts and downstream links.
 - Keep tests isolated from real project data. No live paid generation without approved creative versions and the exact allowance. The user signs in directly; no passwords or session secrets in notes/Git.
+
+## Full intended flow — quick resume overview
+
+**Multi-channel scope:** user wants one shared system supporting different niches, audiences, languages, styles and formats across channels. A request for broad discovery is valid without choosing one permanent niche. Research can compare opportunities across categories, retaining category-specific sources, dates, available metrics, original angles, production effort/cost considerations and possible channel fit. Channel-relative outliers are not a universal cross-niche virality score or revenue forecast. Before producing a selected idea, establish its specific project/channel audience, voice, style, format and duration. Preserve the same twelve-obligation Director Studio process and relevant skills across these content types. Automatic monitoring, saved multi-channel profiles and multi-account publishing remain future work; finish the first end-to-end production path before claiming broad automated coverage.
+
+**User-facing request path:** “Find promising current ideas in my niche” → active-session public research with `yt-viral` → five sourced examples/ideas, observed metrics and capture dates, channel-relative multiples when sufficient data exists, original angles, feasibility and suggested format/duration → user selects an idea → create/save the production brief → follow all twelve obligations below with relevant skill outputs and director approvals. Compare at least four videos per channel for the helper's ranking; insufficient data is labeled, never invented. Title formula labels are observations, not causal proof. On-demand assisted research is available; the local helper analyzes supplied data and does not itself discover or continuously monitor YouTube. Recurring monitoring/notifications and automated media production remain unfinished. No live trend research was performed for this clarification; first niche/audience is pending.
+
+1. **Brief:** capture topic, audience, Short/long format, duration, style and resources.
+2. **Premise:** use sourced `yt-viral` research when requested, `yt-script` hook options and `yt-package` title/thumbnail promises; director selects the idea.
+3. **Ten-page comic:** produce the actual pages and approve story/visual direction.
+4. **Screenplay:** adapt the approved comic into dialogue, shots and timed packages using `yt-script`.
+5. **Scratch audio:** create or import voices, measure actual timing, retain stems/cues and review.
+6. **Boards/references:** produce labeled boards and clean character/prop reference files; review exact prompts and files together.
+7. **Blender previs:** produce editable `.blend` and playable preview; approve framing, blocking and timing.
+8. **Pinned package:** freeze approved prompt/reference/audio/previs versions; check the live Flow model can support the package.
+9. **Spend approval:** director approves the exact package/settings and credit/attempt allowance.
+10. **Google Flow generation:** reserve an authorized attempt, generate a test take, record the observed outcome and reconcile uncertainty before any retry.
+11. **Take review:** download and verify original video; director accepts or requests revisions for identity, action, timing and continuity.
+12. **Final edit/delivery:** assemble accepted takes, audio, captions and credits; use `yt-edit`, `yt-package` and `yt-seo`, plus `yt-chapters`/`yt-shorts` for eligible real long-form material. Review full playback and export the MP4 and project archive.
+
+**After delivery:** user uploads manually in R1. Use `yt-plan` with actual capacity/calendar; use `yt-comment`, `yt-retention` and `yt-audit` with real channel/audience inputs. Later releases add automatic multi-account publishing and continuous feedback. These are intended integrations, not claims that all skill workflows are already automated.
+
+**Finish in reviewable milestones:** (1) independent review and remaining contract gaps; (2) durable film package/credit state and review UI; (3) connected research/story/comic/script/audio/boards/Blender production; (4) live Flow preflight, guarded generation and original downloads; (5) final assembly/upload assets; (6) real twelve-obligation SDET pilot. Reuse completed intake/helper/UI work. For each milestone use BA requirements → PO acceptance criteria → Developer changes → SDET evidence, with user-owned Git review. Software work can proceed before login; live compatibility should be checked early enough to avoid designing around unsupported Flow inputs.
+
+**First concrete restart task:** complete independent review of the current runner/UI, then resolve remaining R1-001/002 contract gaps and implement R1-003 film state with R1-004 credit controls. Do not begin a paid production merely to demonstrate the dashboard.
 
 ## Golden rule — required SOP and skill evidence
 
@@ -98,7 +123,7 @@ Missing inputs pause the dependent production stage, not unrelated software work
 
 ## Later releases — outside the manual-upload R1 boundary
 
-- [ ] Versioned profiles with different audiences, styles, voices and formats per channel/account.
+- [ ] Versioned profiles with different niches, audiences, languages, styles, voices, formats and monetization objectives per channel/account; keep channel assets/context separate while reusing one production engine.
 - [ ] Multiple authorized YouTube, TikTok and Instagram accounts, with strict destination/account isolation.
 - [ ] Publishing/scheduling adapters with actual supported platform permissions, receipts, duplicate-post prevention and recovery.
 - [ ] Ongoing trend monitoring, calendars and actual post-release comment/retention/audit feedback.
