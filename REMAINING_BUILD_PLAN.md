@@ -12,6 +12,40 @@ Combine Director Studio and the YouTube skills into a working brief-to-video sys
 - Preserve all twelve diagram obligations and human creative/spending gates. Select the relevant YouTube skills and retain actual outputs, receipts and downstream links.
 - Keep tests isolated from real project data. No live paid generation without approved creative versions and the exact allowance. The user signs in directly; no passwords or session secrets in notes/Git.
 
+## Golden rule — required SOP and skill evidence
+
+User reaffirmed November 3: this diagram is the production contract. Preserve all twelve obligations, including for Shorts. Google Flow replaces Wan as provider; this does not authorize removing any other obligation. The engine groups them into eight stages; a mapping or written instruction does not prove that the corresponding automation exists.
+
+| Diagram obligation | Current implementation and remaining proof |
+| --- | --- |
+| 01 Project brief | Validated, persisted Short/long brief and handoff implemented. |
+| 02 Premise and ideas | Stage and review gate exist; sourced research and authored premise adapter remain. |
+| 03 Ten-page comic | Required stage/deliverable retained; real page creation and visual approval remain. |
+| 04 Full screenplay | Required stage retained; actual approved-comic adaptation and shot packages remain. |
+| 05 Scratch audio and timing | Existing audio tooling/measurement retained; production adapter and actual approved timing remain. |
+| 06 Boards and references | Existing versioned artifact/review contract retained; real boards and clean-reference production remain. |
+| 07 Blender previs | Required stage and editable-file/preview contract retained; real Blender production/verification remain. |
+| 08 Pin generation package | Mapped to Flow; durable film package, exact input pins and live capability preflight remain. |
+| 09 Approve paid request | Required by contract; film credit/attempt allowance, reservation and recovery implementation remain. Generation is blocked. |
+| 10 Generate video | Google Flow browser provider selected; film browser execution adapter remains. No silent Wan fallback. |
+| 11 Review scene takes | Review obligation retained; original Flow download, provider trace and actual take acceptance remain. |
+| 12 Edit and deliver | Existing edit/review contracts retained; final render, captions/audio, manifest and real delivery acceptance remain. |
+
+Cross-cutting obligations: one authoritative project record, exact-version approvals, leased agent handoffs, old-version preservation, stale dependent work after revisions, and no silent approvals/retries. Existing Store/lease/receipt tests verify the built foundations; film provider/spend recovery still needs implementation and tests.
+
+YouTube integration: the handoff considers all eleven skills and the runner executes six real helper tools with integrity-checked receipts. Read and follow each applicable `SKILL.md`; retain authored outputs as well as tool results, pin their sources and demonstrate downstream use. Scheduling, long-form repurposing, comments, retention and audits still require their actual inputs/lifecycle integrations. Deferred means unfinished or inapplicable with a stated reason, never completed. Do not run irrelevant skills just to fill a checklist.
+
+Before calling R1 complete, SDET must verify:
+
+- [ ] A real project traverses all twelve obligations with approved exact versions, original files and retained review evidence.
+- [ ] Applicable skills produce real outputs used by the next stages; deferred skills have explicit reasons and prerequisites.
+- [ ] Changed inputs invalidate dependent approvals; expired leases and stale pins block saves/submissions.
+- [ ] Generate cannot run without the approved package and remaining allowance; unknown outcomes cannot trigger duplicate paid retries.
+- [ ] An authorized real Flow test produces original downloadable, decodable video and a reviewed final delivery bundle.
+- [ ] Independent branch review and real-video acceptance are recorded separately from local automated tests.
+
+Verification November 3: full Python suite **102 passed, no skips** (`.tools/golden-rule-tests.log`); production build passed. Existing tests cover the twelve mapping keys/stage order, early-stage approval rejection, demo-bypass rejection, all eleven skill entries, actual helper execution, receipt integrity/history and no automatic approval/advancement. This is local integration evidence, not full SOP/provider acceptance. No production video was generated in this audit.
+
 ## Already implemented — do not rebuild
 
 - [x] Consolidated Director Studio, both original skills and eleven YouTube skills, resources and licenses.
