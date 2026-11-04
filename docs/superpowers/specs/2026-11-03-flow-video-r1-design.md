@@ -1,6 +1,6 @@
 # R1 design: brief to reviewed Google Flow video
 
-Date: November 3, 2026. Status: concrete proposal for user review; implementation not started. Supersedes the original foundation-only scope for the next product milestone.
+Date: November 3, 2026. Status: user instructed starting the agreed automation direction on November 3; incremental implementation is in progress on local feature/flow-video-automation. Changes remain uncommitted for user review. Supersedes the original foundation-only scope for the next product milestone.
 
 ## Intent
 

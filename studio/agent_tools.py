@@ -2,10 +2,26 @@
 from pathlib import Path
 from .store import Store, WORKFLOW, WORKFLOWS, workflow_for, Problem
 from .media import inspect_media
+from . import production, skill_runner
 
 
 def database():
     return Store()
+
+
+def create_production_project(payload: dict) -> dict:
+    """Create a Google Flow film from a validated topic, audience, format, duration and style."""
+    return production.create_project(database(), payload)
+
+
+def get_production_handoff(project_id: str, scene_id: str | None = None) -> dict:
+    """Read combined skill selection, verified execution receipts and missing production adapters."""
+    return production.get_handoff(database(), project_id, scene_id)
+
+
+def run_youtube_tool(project_id: str, tool_name: str, arguments: list[str], task_id: str, token: str) -> dict:
+    """Run a fixed local YouTube helper into leased supporting notes; no approval or stage advance."""
+    return skill_runner.run_tool(database(), project_id, tool_name, arguments, task_id, token)
 
 
 def list_projects() -> list[dict]:
@@ -144,4 +160,4 @@ def extract_sprites(project_id: str, scene_id: str, source_version_id: str, sett
     return database().pack_sprite_artifact(project_id, scene_id, source_version_id, settings, task_id, token)
 
 
-TOOLS = {fn.__name__: fn for fn in (list_projects, get_project, get_next_action, claim_task, heartbeat, register_artifact, validate_artifact, submit_for_review, finish_task, save_scene, get_workflow, list_workflows, get_artifact, prepare_generation, export_project, reserve_flow_attempt, record_flow_result, extract_sprites)}
+TOOLS = {fn.__name__: fn for fn in (list_projects, get_project, get_next_action, claim_task, heartbeat, register_artifact, validate_artifact, submit_for_review, finish_task, save_scene, get_workflow, list_workflows, get_artifact, prepare_generation, export_project, reserve_flow_attempt, record_flow_result, extract_sprites, create_production_project, get_production_handoff, run_youtube_tool)}

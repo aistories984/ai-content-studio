@@ -47,6 +47,9 @@ For another machine, change the paths. A compatible Python environment must cont
 
 | Tool | Purpose |
 | --- | --- |
+| `create_production_project` | Validated Flow film brief with format, duration, audience and style |
+| `get_production_handoff` | Eligible stage, selected skills, current/historical tool receipts and blockers |
+| `run_youtube_tool` | Run one allowlisted local YouTube helper under a live lease; save draft evidence |
 | `list_projects` | Project IDs, stages and review counts |
 | `get_project` | Direction, scenes, versions, reviews, timeline and work status |
 | `get_workflow` | Project's stage definitions and checks; pass `project_id` or `workflow_id` for sprite mode |

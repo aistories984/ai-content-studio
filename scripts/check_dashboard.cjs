@@ -23,6 +23,7 @@ const assert = require('node:assert/strict');
     const errors=[];page.on('pageerror',e=>errors.push(e.message));
     await page.goto(`${base}/`);
     await page.getByRole('button',{name:/new project/i}).first().click();
+    await page.getByRole('button',{name:/Film production/}).click();
     await page.getByPlaceholder('The working title of your film').fill('Combined workflow browser fixture');
     await page.getByPlaceholder('Audience, genre, emotional journey, constraints…').fill('Synthetic UI check; no production approval or paid generation.');
     await page.getByRole('button',{name:'Create project',exact:true}).click();

@@ -128,7 +128,17 @@ class Store:
         selected = payload.get("workflow_id", WORKFLOW["id"])
         if selected not in WORKFLOWS:
             raise Problem("Choose an available workflow mode.")
-        settings = {"runtime_minutes": numeric(payload.get("runtime_minutes", 2), "Runtime", .25, 240), "aspect_ratio": payload.get("aspect_ratio", "16:9"), "workflow_id": selected, "workflow_version": WORKFLOWS[selected]["version"], "budget": numeric(payload.get("budget", 0), "Budget", 0, 100000), "demo": bool(payload.get("demo", False))}
+        production_brief = None
+        if selected == "comic-to-flow":
+            from .production import normalize_brief
+            if payload.get("demo", False) is not False:
+                raise Problem("Flow film production requires human stage gates; demo bypass is unavailable.")
+            production_brief = normalize_brief(payload.get("production_brief", payload))
+        runtime = production_brief["target_seconds"] / 60 if production_brief else payload.get("runtime_minutes", 2)
+        ratio = "9:16" if production_brief and production_brief["format"] == "short" else "16:9"
+        settings = {"runtime_minutes": numeric(runtime, "Runtime", 2/60 if production_brief else .25, 240), "aspect_ratio": payload.get("aspect_ratio", ratio), "workflow_id": selected, "workflow_version": WORKFLOWS[selected]["version"], "budget": numeric(payload.get("budget", 0), "Budget", 0, 100000), "demo": bool(payload.get("demo", False))}
+        if production_brief:
+            settings["production_brief"] = production_brief
         if selected == "sprite-to-flow":
             settings["sprite_settings"] = {"view": "side", "pixel_art": True, "cell_width": 128, "cell_height": 128, "sprite_fps": 12, "background_key": "#FF00FF"}
             settings["target_engine"] = text(payload.get("target_engine", "Godot"), "Target engine", 120, True)
@@ -162,6 +172,10 @@ class Store:
             if payload.get("expected_revision") != p["revision"]:
                 raise Problem("This project changed. Refresh before saving.", 409)
             settings = json.loads(p["settings"])
+            if settings.get("workflow_id") == "comic-to-flow":
+                from .production import BRIEF_FIELDS
+                if set(payload) & (BRIEF_FIELDS | {"production_brief", "runtime_minutes", "aspect_ratio", "settings"}):
+                    raise Problem("Production intake is immutable. Create a new project to change production fields.")
             for field in ("creative_locks", "voice_direction", "delivery_notes", "world_notes"):
                 if field in payload:
                     settings[field] = text(payload[field], field)
@@ -938,6 +952,8 @@ class Store:
 
     def generation_package(self, project, scene_id):
         p = self.project(project)
+        if workflow_for(p)["id"] == "comic-to-flow":
+            raise Problem("The Flow film adapter is not implemented. No generation package or paid request was created.", 409)
         if workflow_for(p)["id"] == "sprite-to-flow":
             return self.flow_package(project, scene_id)
         scene = next((s for s in p["scenes"] if s["id"] == scene_id), None)
