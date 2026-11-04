@@ -20,6 +20,10 @@ The intended product is a unified agent framework for video production, automati
 
 ## Ideas and daily notes
 
+### November 3, 2026 — Golden rule for every production
+
+The full AI Director Studio diagram and the relevant YouTube skills must work together whenever we create a video. Preserve every diagram obligation, with Google Flow as the agreed provider replacement for Wan. Actual outputs and their use downstream are required; installed skills, selected names or passing local tests alone do not prove a finished production system. Keep unfinished stages visible and require real-video SDET acceptance before declaring full automation. The compliance matrix and acceptance checklist are in `REMAINING_BUILD_PLAN.md`.
+
 ### November 2, 2026 — One framework, automation, and a business outcome
 
 I will provide the AI architect's repository URL. I want its full available project contents brought down and reviewed, preserving his architecture and combining it with this repository in one unified repository. Plan how both systems will work together to improve the output.

@@ -20,6 +20,7 @@ Supporting goals:
 
 ## Current handoff
 
+- Golden rule reaffirmed and audited: preserve all twelve diagram obligations and require actual relevant YouTube-skill outputs/downstream use. See the compliance matrix and unchecked real-video acceptance gates in `REMAINING_BUILD_PLAN.md`. Fresh audit: 102 tests pass/no skips and production build passes; full Flow production remains unfinished. Golden-rule documentation changes are local, unstaged and uncommitted.
 - Latest Git update: user committed the prepared work as `b03143f`; on explicit request, published `feature/flow-video-automation` to origin and verified GitHub SHA `b03143f677c6981f0a4804205f14f76e3bc76f44` equals local HEAD. Master remains `2cf5f5e`. No agent commit, PR, or merge. This publication note remains a local uncommitted documentation update.
 - Remaining-work tracker: `REMAINING_BUILD_PLAN.md`. On “continue what remains,” read it and this handoff, inspect actual Git state, and resume the first actionable unfinished item without rebuilding completed work.
 - Canonical project: this architect-repo Git checkout. Local branch **feature/flow-video-automation** from master `2cf5f5e`.
@@ -105,3 +106,5 @@ Supporting goals:
 - Saved REMAINING_BUILD_PLAN.md with implemented work to preserve, pending independent review, partial ticket status, ordered remaining R1-001–014 work, live-input prerequisites and later multi-account scope. Updated both AGENTS files, backlog link and handoff so “continue what remains” resumes targeted unfinished work, not a rebuild. Documentation only; no code/tests rerun, no Git publication.
 
 - User explicitly requested publishing the feature branch. Found a clean branch at user-created commit b03143f, pushed/set upstream to origin/feature/flow-video-automation (already up to date), and verified the remote SHA matches HEAD. No master push, new commit, PR, or merge. Recorded the publication locally without committing these notes.
+
+- November 3 golden-rule audit: read Director Studio coordination instructions, reviewed the Flow diagram mapping, skill catalog and existing gate/receipt tests. Fresh full suite passed 102 tests in 12.534s with no skips; production build passed. Added mandatory golden-rule instructions, a twelve-obligation compliance matrix and unchecked real-provider acceptance checklist to the remaining plan; recorded the user's decision in thoughts. Current gaps include authored production adapters, durable film package/credit controls, Flow browser generation, original downloads and final render/acceptance. No product code changed, no paid request or upload, no Git staging/commit/push/PR/merge. Local edits remain for user review.
