@@ -20,11 +20,13 @@ Supporting goals:
 
 ## Current handoff
 
-- Golden rule reaffirmed and audited: preserve all twelve diagram obligations and require actual relevant YouTube-skill outputs/downstream use. See the compliance matrix and unchecked real-video acceptance gates in `REMAINING_BUILD_PLAN.md`. Fresh audit: 102 tests pass/no skips and production build passes; full Flow production remains unfinished. Golden-rule documentation changes are local, unstaged and uncommitted.
-- Latest Git update: user committed the prepared work as `b03143f`; on explicit request, published `feature/flow-video-automation` to origin and verified GitHub SHA `b03143f677c6981f0a4804205f14f76e3bc76f44` equals local HEAD. Master remains `2cf5f5e`. No agent commit, PR, or merge. This publication note remains a local uncommitted documentation update.
+- Research-first interaction clarified: broad cross-niche discovery is a supported intended interaction, not a request to lock the product to one niche. User wants multiple channels with different content. On-demand yt-viral research → sourced opportunities with channel/category context → user selects → specific channel/project brief → full twelve-obligation Studio production. No live trends researched or production topic selected yet. Saved multi-channel profiles, continuous monitoring, automated finished-video production and publishing remain unfinished. See remaining plan and thoughts.
+- Latest status review: saved the full intended twelve-step flow, all eleven skills' lifecycle placement and six finish milestones in `REMAINING_BUILD_PLAN.md`. Foundation is implemented; automated authored media, film spending/provider/download/render integrations and real-video acceptance remain unfinished. Resume with independent runner/UI review, contract gaps, then R1-003/004 film state and credit controls.
+- Golden rule: preserve all twelve diagram obligations and require actual relevant YouTube-skill outputs/downstream use. The last recorded audit passed 102 tests/no skips and production build; this documentation-only status review did not rerun tests or perform live provider checks.
+- Latest Git inspection: local feature/flow-video-automation HEAD is `ef26697`, after `345b492` and `b03143f`. Tree was clean before this status documentation update. Earlier branch publication was verified at b03143f; newer remote/PR/merge state was not checked. No agent commit, push, PR or merge performed.
 - Remaining-work tracker: `REMAINING_BUILD_PLAN.md`. On “continue what remains,” read it and this handoff, inspect actual Git state, and resume the first actionable unfinished item without rebuilding completed work.
 - Canonical project: this architect-repo Git checkout. Local branch **feature/flow-video-automation** from master `2cf5f5e`.
-- User Git policy: no staging, commits, pushes, PR creation or merges by the agent. All current changes remain local, unstaged and uncommitted; user reviews and performs Git actions.
+- User Git policy: leave new changes local, unstaged and uncommitted; user reviews and performs Git actions unless explicitly authorizing a particular later action. Preserve existing commits and edits.
 - Current slice implemented: `comic-to-flow` preset, validated Short/long briefs, combined-skill handoff, current/history receipt evidence, six-tool allowlisted runner, shared HTTP/CLI/MCP operations and dashboard intake/evidence panel. Full automation is not complete.
 - Verified current code: **102 tests pass with no skips**, production build, existing dashboard and new Flow browser smoke (Short/long, actual hookscore receipt/download, no gate advance, desktop/mobile). See `docs/sdlc/05-LOCAL-REVIEW.md` and `docs/COMBINED_VALIDATION.md`.
 - New tools: create_production_project, get_production_handoff, run_youtube_tool. CLI/MCP now expose 21 operations; no approval operation. Read `docs/youtube/WORKFLOW.md` for interfaces.
@@ -37,6 +39,12 @@ Supporting goals:
 - Read this handoff first; inspect targeted code and linked docs as needed, not the entire repository.
 
 ## Daily activity
+
+### November 3, 2026 — Completion roadmap status review
+
+- Recorded user's clarification that the studio must support broad discovery and multiple distinct channel/content identities. Added this scope to AGENTS, remaining plan and thoughts; removed the implication that a permanent niche is required to proceed. Keep comparisons evidence-based and set the selected project's audience/style before production. Existing implementation priorities and manual-upload R1 boundary remain. Documentation only; no code/tests/live research/Git publication.
+- Clarified research-first functionality after reading yt-viral and relevant planning/script instructions. Saved the user interaction path and distinction between on-demand assisted research, the six-tool analyzer and unbuilt recurring monitoring/media automation. Requested niche/audience before live research. Documentation only; no code/tests/provider/Git publication.
+- Reviewed the current handoff, remaining tickets, actual branch history and targeted implementation entry points. Local HEAD is ef26697; working tree was clean. Confirmed Flow film preparation still rejects the missing adapter and browser/generation/render/publish readiness remains false. Added the full twelve-step intended production route, all eleven skills' lifecycle placement, six finish milestones and exact restart task to REMAINING_BUILD_PLAN.md. Corrected stale current Git notes; remote/PR/merge state not checked. Documentation only: no test rerun, code changes, paid generation, upload or Git publication. Last recorded local validation remains 102 tests, build and browser checks; real-provider acceptance and independent whole-branch review are still pending.
 
 ### 2026-11-02
 
