@@ -8,7 +8,7 @@ Read [WORK_LOG.md](WORK_LOG.md) first for the goal and handoff. See [the integra
 
 Next product milestone: [SDLC agenda and four-role team](docs/sdlc/README.md), [14-ticket backlog](docs/sdlc/02-PO-BACKLOG.md), and [R1 Flow video design](docs/superpowers/specs/2026-11-03-flow-video-r1-design.md). R1 targets actual reviewed/downloaded Flow video and final delivery with manual upload; multi-account social publishing is later scope. These planning documents do not indicate that the missing automation is implemented.
 
-Source consolidation is complete. The six YouTube tools and their shared-artifact handoff into Director Studio are covered by automated tests. See [combined validation](docs/COMBINED_VALIDATION.md) and [how to use both sources](docs/youtube/WORKFLOW.md). Automated YouTube orchestration, a Google Flow film adapter, and publishing are not implemented.
+Local feature-branch work adds a Google Flow film project type with validated Short/long briefs, a combined-skill handoff, and an allowlisted runner for all six YouTube tools. Saved outputs carry source/input/dependency hashes and remain subject to human review. See [local review notes](docs/sdlc/05-LOCAL-REVIEW.md), [combined validation](docs/COMBINED_VALIDATION.md), and [usage](docs/youtube/WORKFLOW.md). Flow browser generation, credit controls, real production asset adapters, final rendering and publishing remain future work. Changes are local and uncommitted for user review.
 
 
 Director Studio is a local AI video-production dashboard with versioned artifacts, prompts beside previews, human approval gates, scene direction, scratch audio, a rough-cut timeline, and a reusable CLI/MCP agent interface.

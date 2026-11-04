@@ -61,3 +61,24 @@ The smoke test launches an isolated browser and temporary app data, chooses a fr
 - Creator voice, target audience, niche, paid offer, and actual channel analytics still need real user inputs. These fixtures do not demonstrate viral reach or revenue.
 
 Source files coexisting is not the same as autonomous production. The verified integration today is the skill/tool workflow plus shared Studio artifact/review storage described in `docs/youtube/WORKFLOW.md`.
+
+## Local Flow intake/runner slice — November 3, 2026
+
+On local branch `feature/flow-video-automation`, unstaged and uncommitted for user review:
+
+- New Flow film workflow preserves the original film artifact kinds/scopes and diagram mapping; raw source diagram unchanged. Demo bypass rejected. Flow preparation fails explicitly until its provider adapter exists.
+- Intake validates per-project topic, audience, style, format and duration and persists the normalized brief. Handoffs show all relevant skill instructions/hashes and defer unsupported work honestly.
+- Six allowlisted helpers execute through shared HTTP/CLI/MCP with lease/pin checks before and during registration, fixed script/dependency hashes, input hashes and strict JSON receipts. Changed inputs, malformed output, failed processes, stale claims or unknown tools cannot register success.
+- Evidence distinguishes current/latest outputs from superseded/history and changed-source receipts. Recorded output stays draft until reviewed; required production stages do not advance automatically.
+- Full suite: **102 tests passed, zero skips/failures**, including real six-tool fixtures, new HTTP/CLI contracts and a real 21-tool stdio MCP session. Production TypeScript/Vite build passed. Existing dashboard browser regression passed. Flow browser check covers default selection, Short/long intake, saved state, actual hook receipt and mobile layout; latest rerun is recorded in local review notes.
+- Tests exposed and fixed superseded-evidence status, extreme duration overflow, nonfinite stored JSON receipts and a missing invocation prompt. Browser RED/green exposed the missing initial Flow UI and an inaccessible exact video-format label.
+
+Independent review: Task1 received a fresh SDET review and approved fix re-review. The Developer sub-agent hit its usage limit during Task2; coordinator completed remaining changes and automated verification inline. **Fresh independent review of Tasks2/3 and the whole branch remains pending**. This is local implementation evidence, not R1 provider acceptance or merge approval.
+
+Run the Flow browser check with the same local test dependencies as the existing smoke:
+
+```bash
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.tools/browsers" node scripts/check_production.cjs
+```
+
+No Google Flow account session, real generation, credits, cloud uploads or publication were used. Actual stage-asset creation, credit/attempt controls, provider generation/download, final rendering and publishing remain later tickets.

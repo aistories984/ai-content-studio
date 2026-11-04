@@ -136,6 +136,11 @@ function isSpriteProject(project?: Project | null) {
     (project?.workflow_id || project?.settings.workflow_id) === "sprite-to-flow"
   );
 }
+function isFlowFilm(project?: Project | null) {
+  return (
+    (project?.workflow_id || project?.settings.workflow_id) === "comic-to-flow"
+  );
+}
 function spriteSettings(scene?: Scene, project?: Project): Json {
   return {
     action: "idle",
@@ -415,7 +420,11 @@ function App() {
     if (nav === "Workflow & agents")
       api(
         "/docs/" +
-          (isSpriteProject(project) && docName === "spec" ? "sprite" : docName),
+          (isFlowFilm(project) && docName === "spec"
+            ? "production"
+            : isSpriteProject(project) && docName === "spec"
+              ? "sprites"
+              : docName),
       )
         .then((d) => setDoc(d.content))
         .catch((e) => setError(e.message));
@@ -658,7 +667,7 @@ function App() {
                           ? "GAME SPRITES · GOOGLE FLOW"
                           : p.settings.demo
                             ? "TECHNICAL SANDBOX"
-                            : `${p.settings.runtime_minutes} MIN TARGET · ${p.settings.aspect_ratio}`}
+                            : `${isFlowFilm(p) ? p.settings.production_brief.target_seconds + " SEC" : p.settings.runtime_minutes + " MIN"} TARGET · ${p.settings.aspect_ratio}`}
                       </span>
                       <div className="project-progress">
                         {p.stage_status.map((s) => (
@@ -721,6 +730,9 @@ function App() {
                       </a>
                     </div>
                   </section>
+                  {isFlowFilm(project) && (
+                    <ProductionHandoff project={project} sceneId={sceneId} />
+                  )}
                   {nav === "Workflow & agents" ? (
                     <section className="workflow-layout">
                       <div className="panel">
@@ -784,8 +796,16 @@ function App() {
                               ["spec", "Workflow spec"],
                               ["agents", "Agent tools"],
                               [
-                                spriteMode ? "sprite" : "wan",
-                                spriteMode ? "Flow & sprites" : "Wan & timing",
+                                spriteMode
+                                  ? "sprites"
+                                  : isFlowFilm(project)
+                                    ? "production"
+                                    : "wan",
+                                spriteMode
+                                  ? "Flow & sprites"
+                                  : isFlowFilm(project)
+                                    ? "Flow & YouTube"
+                                    : "Wan & timing",
                               ],
                             ].map(([id, name]) => (
                               <button
@@ -1285,6 +1305,16 @@ function App() {
                                 onError={setError}
                                 notify={setNotice}
                               />
+                            ) : isFlowFilm(project) ? (
+                              <div className="connection-card">
+                                <strong>Google Flow film</strong>
+                                <p>Generation adapter not connected.</p>
+                                <small>
+                                  Prepare and review the creative stages first.
+                                  Browser generation, spending controls and
+                                  original downloads are still being built.
+                                </small>
+                              </div>
                             ) : (
                               <div className="connection-card">
                                 <div>
@@ -3261,7 +3291,7 @@ function PromptEditor({
           onChange={(value) => setMetadata(JSON.stringify(value, null, 2))}
         />
       )}
-      {!isSpriteProject(project) && (
+      {!isSpriteProject(project) && !isFlowFilm(project) && (
         <label className="checkbox">
           <input
             type="checkbox"
@@ -3892,6 +3922,119 @@ function FormError({ error }: { error: string }) {
     </div>
   ) : null;
 }
+function ProductionHandoff({
+  project,
+  sceneId,
+}: {
+  project: Project;
+  sceneId: string;
+}) {
+  const [handoff, setHandoff] = useState<Json | null>(null);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    let active = true;
+    setHandoff(null);
+    setError("");
+    api<Json>(
+      `/projects/${project.id}/production${sceneId !== "all" ? `?scene_id=${encodeURIComponent(sceneId)}` : ""}`,
+    )
+      .then((data) => {
+        if (active) setHandoff(data);
+      })
+      .catch((e) => {
+        if (active) setError(e.message);
+      });
+    return () => {
+      active = false;
+    };
+  }, [project, sceneId]);
+  return (
+    <section
+      className="panel production-handoff"
+      aria-label="Production handoff"
+    >
+      <div className="panel-heading">
+        <Workflow size={18} />
+        <h3>Production handoff</h3>
+      </div>
+      {error ? (
+        <p role="alert" className="alert error">
+          {error}
+        </p>
+      ) : !handoff ? (
+        <p>Loading saved handoff…</p>
+      ) : (
+        <>
+          <p>
+            Next step: <strong>{handoff.next_action.name}</strong> ·{" "}
+            {handoff.next_action.state === "awaiting_review"
+              ? "Awaiting your review"
+              : "Creative work required"}
+          </p>
+          <p className="production-limit">
+            Generation adapter not connected. This project can plan work and
+            record local YouTube tool outputs; it cannot generate, render, or
+            publish a video yet.
+          </p>
+          <ul className="production-skills" aria-label="Selected skills">
+            {handoff.skills.map((skill: Json) => (
+              <li key={skill.name}>
+                <strong>{skill.name}</strong>
+                <span>
+                  {skill.status === "has_evidence"
+                    ? "Output recorded"
+                    : "Not run"}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="hint">
+            A recorded tool output does not approve the story or complete a
+            production stage.
+          </p>
+          {handoff.evidence.length > 0 && (
+            <div className="production-evidence">
+              <h4>Saved tool outputs</h4>
+              <ul>
+                {handoff.evidence.map((e: Json) => (
+                  <li key={e.version_id}>
+                    <strong>{e.tool_name}</strong> ·{" "}
+                    {e.is_current ? "Current" : "Historical"} ·{" "}
+                    {e.status.replaceAll("_", " ")}
+                    <a
+                      href={`/api/media/${e.version_id}/${e.receipt.file_index}?download=true`}
+                    >
+                      Download receipt
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <details>
+            <summary>Required inputs and remaining connections</summary>
+            <ul>
+              {handoff.blockers.map((b: string, i: number) => (
+                <li key={i}>{b}</li>
+              ))}
+            </ul>
+          </details>
+          <details>
+            <summary>All YouTube skills</summary>
+            <ul>
+              {handoff.catalog.map((skill: Json) => (
+                <li key={skill.name}>
+                  <strong>{skill.name}</strong> — {skill.reason}
+                </li>
+              ))}
+            </ul>
+          </details>
+        </>
+      )}
+    </section>
+  );
+}
+
 function ProjectForm({
   onClose,
   onSaved,
@@ -3902,12 +4045,24 @@ function ProjectForm({
   const [title, setTitle] = useState(""),
     [brief, setBrief] = useState(""),
     [runtime, setRuntime] = useState(2),
-    [ratio, setRatio] = useState("16:9"),
-    [mode, setMode] = useState("comic-to-wan"),
+    [ratio, setRatio] = useState("9:16"),
+    [mode, setMode] = useState("comic-to-flow"),
     [engine, setEngine] = useState("Godot"),
-    [pixelSize, setPixelSize] = useState(128);
-  const spriteMode = mode === "sprite-to-flow";
+    [pixelSize, setPixelSize] = useState(128),
+    [topic, setTopic] = useState(""),
+    [audience, setAudience] = useState(""),
+    [style, setStyle] = useState(""),
+    [format, setFormat] = useState("short"),
+    [seconds, setSeconds] = useState(24),
+    [voice, setVoice] = useState(""),
+    [research, setResearch] = useState(true);
+  const spriteMode = mode === "sprite-to-flow",
+    flowMode = mode === "comic-to-flow";
   const f = useForm();
+  function selectMode(value: string) {
+    setMode(value);
+    setRatio(value === "comic-to-flow" && format === "short" ? "9:16" : "16:9");
+  }
   return (
     <Modal
       title="Start a new project"
@@ -3919,20 +4074,37 @@ function ProjectForm({
           e.preventDefault();
           f.run(async () =>
             onSaved(
-              await api("/projects", "POST", {
-                title,
-                brief,
-                runtime_minutes: runtime,
-                aspect_ratio: ratio,
-                workflow_id: mode,
-                ...(spriteMode
+              await api(
+                flowMode ? "/production/projects" : "/projects",
+                "POST",
+                flowMode
                   ? {
-                      target_engine: engine,
-                      cell_width: pixelSize,
-                      cell_height: pixelSize,
+                      ...(title.trim() ? { title } : {}),
+                      ...(brief.trim() ? { brief } : {}),
+                      topic,
+                      audience,
+                      style,
+                      format,
+                      target_seconds: seconds,
+                      aspect_ratio: ratio,
+                      research_requested: research,
+                      ...(voice.trim() ? { creator_voice: voice } : {}),
                     }
-                  : {}),
-              }),
+                  : {
+                      title,
+                      brief,
+                      runtime_minutes: runtime,
+                      aspect_ratio: ratio,
+                      workflow_id: mode,
+                      ...(spriteMode
+                        ? {
+                            target_engine: engine,
+                            cell_width: pixelSize,
+                            cell_height: pixelSize,
+                          }
+                        : {}),
+                    },
+              ),
             ),
           );
         }}
@@ -3942,17 +4114,26 @@ function ProjectForm({
           <div className="mode-picker" aria-label="Choose project mode">
             <button
               type="button"
-              className={!spriteMode ? "active" : ""}
-              onClick={() => setMode("comic-to-wan")}
+              className={flowMode ? "active" : ""}
+              onClick={() => selectMode("comic-to-flow")}
+            >
+              <Sparkles size={24} />
+              <strong>Google Flow film</strong>
+              <small>Brief + YouTube skills → reviewed film workflow</small>
+            </button>
+            <button
+              type="button"
+              className={mode === "comic-to-wan" ? "active" : ""}
+              onClick={() => selectMode("comic-to-wan")}
             >
               <Clapperboard size={24} />
               <strong>Film production</strong>
-              <small>Premise → comic → script → Wan</small>
+              <small>Premise → comic → script → Wan packages</small>
             </button>
             <button
               type="button"
               className={spriteMode ? "active" : ""}
-              onClick={() => setMode("sprite-to-flow")}
+              onClick={() => selectMode("sprite-to-flow")}
             >
               <Gamepad2 size={24} />
               <strong>Game sprites</strong>
@@ -3962,7 +4143,7 @@ function ProjectForm({
           <Field label="Project title">
             <input
               autoFocus
-              required
+              required={!flowMode}
               maxLength={120}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -3973,6 +4154,82 @@ function ProjectForm({
               }
             />
           </Field>
+          {flowMode && (
+            <>
+              <Field label="Topic">
+                <input
+                  required
+                  maxLength={10000}
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                />
+              </Field>
+              <Field label="Audience">
+                <input
+                  required
+                  maxLength={10000}
+                  value={audience}
+                  onChange={(e) => setAudience(e.target.value)}
+                />
+              </Field>
+              <Field label="Visual style">
+                <input
+                  required
+                  maxLength={10000}
+                  value={style}
+                  onChange={(e) => setStyle(e.target.value)}
+                />
+              </Field>
+              <div className="form-row">
+                <Field label="Video format">
+                  <select
+                    aria-label="Video format"
+                    value={format}
+                    onChange={(e) => {
+                      setFormat(e.target.value);
+                      setRatio(e.target.value === "short" ? "9:16" : "16:9");
+                    }}
+                  >
+                    <option value="short">Short</option>
+                    <option value="long">Long video</option>
+                  </select>
+                </Field>
+                <Field label="Target duration (seconds)">
+                  <input
+                    type="number"
+                    required
+                    min={2}
+                    max={14400}
+                    step="any"
+                    value={seconds}
+                    onChange={(e) => setSeconds(+e.target.value)}
+                  />
+                </Field>
+              </div>
+              <Field label="Creator voice or examples (optional)">
+                <textarea
+                  rows={2}
+                  maxLength={10000}
+                  value={voice}
+                  onChange={(e) => setVoice(e.target.value)}
+                />
+              </Field>
+              <label className="checkbox">
+                <input
+                  type="checkbox"
+                  checked={research}
+                  onChange={(e) => setResearch(e.target.checked)}
+                />
+                <span>
+                  Include standout-video research
+                  <small>
+                    Requires real public video data; results are not a promise
+                    of views.
+                  </small>
+                </span>
+              </label>
+            </>
+          )}
           <Field label="Creative brief">
             <textarea
               rows={4}
@@ -3987,28 +4244,29 @@ function ProjectForm({
           </Field>
           <div className="form-row">
             {spriteMode ? (
-              <Field label="Target game engine">
+              <Field label="Target engine">
                 <select
                   value={engine}
                   onChange={(e) => setEngine(e.target.value)}
                 >
-                  <option>Godot</option>
-                  <option>Unity</option>
-                  <option>Phaser</option>
-                  <option>Other</option>
+                  {["Godot", "Unity", "Phaser", "Other"].map((x) => (
+                    <option key={x}>{x}</option>
+                  ))}
                 </select>
               </Field>
             ) : (
-              <Field label="Target runtime (minutes)">
-                <input
-                  type="number"
-                  min="0.25"
-                  max="240"
-                  step="0.25"
-                  value={runtime}
-                  onChange={(e) => setRuntime(+e.target.value)}
-                />
-              </Field>
+              !flowMode && (
+                <Field label="Target runtime (minutes)">
+                  <input
+                    type="number"
+                    min="0.25"
+                    max="240"
+                    step="0.25"
+                    value={runtime}
+                    onChange={(e) => setRuntime(+e.target.value)}
+                  />
+                </Field>
+              )
             )}
             {spriteMode && (
               <Field label="Default cell size">
@@ -4033,9 +4291,11 @@ function ProjectForm({
             </Field>
           </div>
           <p className="callout">
-            {spriteMode
-              ? "Character and motion approvals lead to Google Flow in the browser. Import a reviewed 4, 6, 8 or 10 second Omni clip, then extract a transparent sprite atlas locally."
-              : "Your project starts at the premise gate. Generation packages are 2–15 seconds at 30 fps."}
+            {flowMode
+              ? "Follows the complete film diagram with your review gates. Intake and local YouTube tools are connected; Google Flow generation and final rendering still need adapters. No credits are spent by creating a project."
+              : spriteMode
+                ? "Character and motion approvals lead to Google Flow in the browser. Import a reviewed 4, 6, 8 or 10 second Omni clip, then extract a transparent sprite atlas locally."
+                : "Your project starts at the premise gate. Generation packages are 2–15 seconds at 30 fps."}
           </p>
         </div>
         <FormFooter busy={f.busy} onClose={onClose} label="Create project" />

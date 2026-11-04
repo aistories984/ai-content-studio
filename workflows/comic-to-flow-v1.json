@@ -1,0 +1,129 @@
+{
+  "id": "comic-to-flow",
+  "version": 1,
+  "title": "Google Flow film",
+  "clip_seconds": 15,
+  "fps": 30,
+  "provider": "Google Flow",
+  "stages": [
+    {
+      "id": "premise",
+      "name": "Premise",
+      "kind": "premise",
+      "scope": "project",
+      "deliverable": "Story hook, cast, conflict, ending, emotional intent and target runtime.",
+      "checks": [
+        "Clear audience and purpose",
+        "Coherent beginning, change and ending"
+      ],
+      "instruction": "Propose a few distinct ideas. Ask the director to select or revise one before adaptation. Use yt-script for scored hook options and yt-package for the click promise; use yt-viral only when research is requested. Register supporting notes; they do not replace the premise deliverable."
+    },
+    {
+      "id": "comic",
+      "name": "Comic",
+      "kind": "comic",
+      "scope": "project",
+      "deliverable": "A readable 10-page comic with approved visual direction and initial character designs.",
+      "checks": [
+        "Exactly 10 readable pages",
+        "Consistent character design",
+        "Story works as a comic"
+      ],
+      "instruction": "Calibrate a visual sample first. Preserve approved premise. Register the pages as one versioned package."
+    },
+    {
+      "id": "script",
+      "name": "Script",
+      "kind": "script",
+      "scope": "project",
+      "deliverable": "Complete screenplay, scene intent, continuity and shots grouped into packages up to 15 seconds.",
+      "checks": [
+        "Complete narrative",
+        "Scene entry/exit state",
+        "Dialogue and action fit the planned durations"
+      ],
+      "instruction": "Adapt the approved comic into a screenplay. Use natural shot lengths; a generation package is not necessarily a visible cut. Read yt-script and score hooks using hookscore.py. Retain beat/on-screen directions and actual source pins; a YouTube script does not bypass the approved ten-page comic or full screenplay."
+    },
+    {
+      "id": "audio",
+      "name": "Audio",
+      "kind": "audio",
+      "scope": "scene",
+      "deliverable": "Measured temporary dialogue, isolated character tracks, silence/action beats and cue sheet.",
+      "checks": [
+        "Measured timing",
+        "No unintended overlap or truncation",
+        "Temporary voices identified"
+      ],
+      "instruction": "Use the scratch audio tool. Listen in context. Preserve the full line on overflow and request timing changes."
+    },
+    {
+      "id": "boards",
+      "name": "Boards",
+      "kind": "storyboard",
+      "scope": "scene",
+      "deliverable": "Labeled boards plus clean frames, character/prop references and exact reference mapping.",
+      "checks": [
+        "Cast/props/eye lines consistent",
+        "Shot and prompt agree",
+        "Required reference files present"
+      ],
+      "instruction": "Keep permanent character IDs. Include emotional direction and scene start/end state. Review exact prompt and asset versions together. Consider yt-package for the thumbnail visual brief while preserving the storyboard/reference deliverable."
+    },
+    {
+      "id": "blender",
+      "name": "Blender",
+      "kind": "previs",
+      "scope": "scene",
+      "deliverable": "Color-coded dummy scene, editable Blender file and clean playable preview against approved timing.",
+      "checks": [
+        "Camera and motion match boards",
+        "30 fps and package duration",
+        "Identity-to-dummy mapping"
+      ],
+      "instruction": "Use approved shots and timing. Render a picture-only reference and review copy. Do not treat technical render success as approval."
+    },
+    {
+      "id": "flow",
+      "name": "Google Flow",
+      "kind": "video",
+      "scope": "scene",
+      "deliverable": "Original generated takes, exact submitted prompt/settings, pinned references, observed provider receipt and take review.",
+      "checks": [
+        "Identity, action, performance and continuity",
+        "Audio and lip synchronization",
+        "Full playback and neighboring cuts"
+      ],
+      "instruction": "Pin the approved prompt, ordered clean references, measured audio and Blender previs. Inspect the signed-in Google Flow visible browser UI for current capability and settings. Review timing adaptations, then obtain an exact-version credit/attempt allowance before Generate. Record every attempt, provider evidence and original download; reconcile unknown outcomes before any retry. Human take review is required. The Flow film adapter is not implemented; never substitute Wan."
+    },
+    {
+      "id": "edit",
+      "name": "Edit",
+      "kind": "edit",
+      "scope": "project",
+      "deliverable": "Selected take timeline, finished film, separate audio, captions and portable project export.",
+      "checks": [
+        "Continuous film playback",
+        "Voice/sound continuity",
+        "Delivery formats and credits"
+      ],
+      "instruction": "Use approved usable ranges. Compare transitions and pacing across packages. Keep source takes and editable timeline. Use yt-edit with an actual timed transcript, yt-seo for search-facing delivery text and yt-package for title/thumbnail checks. Use yt-chapters only for eligible long-form transcripts and yt-shorts only when repurposing actual long-form sources. Post-release yt-comment, yt-retention and yt-audit require real audience/channel inputs. Supporting skill output does not replace the reviewed final film."
+    }
+  ],
+  "execution": "browser_ui",
+  "timing_note": "The diagram plans 2\u201315 whole-second packages at 30 fps. These are planning constraints, not a guarantee of Flow model capability; inspect live controls and review any adaptation.",
+  "diagram_mapping": {
+    "brief": "production_brief",
+    "premise": "premise",
+    "comic": "comic",
+    "script": "script",
+    "audio": "audio",
+    "boards": "boards",
+    "blender": "blender",
+    "package": "flow: pinned exact prompt, references, approved audio and previs; capability preflight",
+    "spend": "flow: human exact-package budget and attempt allowance before Generate",
+    "wan": "flow: Google Flow browser execution; test shot then authorized batches",
+    "takes": "flow: original downloads, provider receipt and human take review",
+    "edit": "edit"
+  }
+}

@@ -1,6 +1,6 @@
 # Release 1 product backlog
 
-November 3, 2026 · Planning baseline for design review. No ticket below is implemented or accepted by this document.
+November 3, 2026 · User directed incremental implementation on local feature/flow-video-automation. Ticket completion requires evidence below; nothing is accepted merely by this document.
 
 R1 delivers one original, reviewed final film containing real Google Flow output, its original download and a portable manual-upload bundle. Every project collects topic, audience, Short/long format and target duration. Agents operate during an active session (selected approach A), preserving state for later resume. Manual upload is the release boundary. Revenue and audience growth are measured objectives, never promised results.
 
@@ -17,6 +17,11 @@ These are concrete **local tickets**, identified below; no external issue tracke
 **Done for R1:** SDET G0–G6 passed, BA-A01–07 satisfied, actual Flow output downloaded and used in final film, exact takes and complete final playback approved by the human, archive integrity verified and manual-upload boundary explicit. No critical/high integrity, spending, approval, data-loss or delivery defects remain. Ordinary agent tools must continue to lack human approval operations.
 
 Dependencies below are completion dependencies unless a stated offline contract fixture allows earlier development. Owners are accountable roles, not currently running services. Developer owns implementation; SDET owns independent verification; PO owns prioritization/readiness; human director owns creative/spend decisions.
+
+## Current implementation slice
+
+Concise completed/remaining status and resume order: [REMAINING_BUILD_PLAN.md](../../REMAINING_BUILD_PLAN.md). Detailed ticket criteria below remain authoritative; a working portion is not full ticket acceptance.
+Local plan: `docs/superpowers/plans/2026-11-03-flow-intake-and-skill-execution.md`. Work begins on R1-001 workflow contract and R1-002 intake, handoff and real YouTube-tool execution. This does not complete R1-003/004 spending/recovery or the provider/delivery tickets. All work stays local, unstaged and uncommitted until user review. Verification results will be recorded in WORK_LOG.md and the local review notes.
 
 ## Ordered tickets
 

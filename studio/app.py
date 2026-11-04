@@ -17,6 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from .bootstrap import seed
 from .media import inspect_media
 from .store import Store, Problem, ROOT, WORKFLOW, WORKFLOWS, workflow_for, encode, direction_hash
+from . import production, skill_runner
 
 store = Store()
 DIRECTOR_TOKEN = secrets.token_urlsafe(32)
@@ -75,6 +76,22 @@ def projects():
 def create_project(payload: dict):
     # Sandbox bypass is only available on the imported lab, never on a user-created film.
     return store.create_project({**payload, "demo": False})
+
+
+@app.post("/api/production/projects")
+def create_production_project(payload: dict):
+    return production.create_project(store, payload)
+
+
+@app.get("/api/projects/{project}/production")
+def get_production_handoff(project: str, scene_id: str | None = None):
+    return production.get_handoff(store, project, scene_id)
+
+
+@app.post("/api/projects/{project}/youtube-tool")
+def run_youtube_tool(project: str, payload: dict):
+    return skill_runner.run_tool(store, project, payload.get("tool_name"), payload.get("arguments"),
+                                 payload.get("task_id"), payload.get("token"))
 
 
 @app.get("/api/projects/{project}")
@@ -270,7 +287,7 @@ def sprites(project: str, payload: dict):
 
 @app.get("/api/docs/{name}")
 def document(name: str):
-    files = {"spec": ROOT / "docs/WORKFLOW_SPEC.md", "agents": ROOT / "docs/AGENT_INTERFACE.md", "wan": ROOT / "docs/WAN_AND_AUDIO.md", "sprites": ROOT / "docs/SPRITE_WORKFLOW.md"}
+    files = {"production": ROOT / "docs/youtube/WORKFLOW.md", "spec": ROOT / "docs/WORKFLOW_SPEC.md", "agents": ROOT / "docs/AGENT_INTERFACE.md", "wan": ROOT / "docs/WAN_AND_AUDIO.md", "sprites": ROOT / "docs/SPRITE_WORKFLOW.md"}
     if name not in files or not files[name].exists():
         raise Problem("Document not found.", 404)
     return {"content": files[name].read_text(encoding="utf-8")}
