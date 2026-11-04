@@ -20,6 +20,7 @@ Supporting goals:
 
 ## Current handoff
 
+- Latest Git update: user committed the prepared work as `b03143f`; on explicit request, published `feature/flow-video-automation` to origin and verified GitHub SHA `b03143f677c6981f0a4804205f14f76e3bc76f44` equals local HEAD. Master remains `2cf5f5e`. No agent commit, PR, or merge. This publication note remains a local uncommitted documentation update.
 - Remaining-work tracker: `REMAINING_BUILD_PLAN.md`. On “continue what remains,” read it and this handoff, inspect actual Git state, and resume the first actionable unfinished item without rebuilding completed work.
 - Canonical project: this architect-repo Git checkout. Local branch **feature/flow-video-automation** from master `2cf5f5e`.
 - User Git policy: no staging, commits, pushes, PR creation or merges by the agent. All current changes remain local, unstaged and uncommitted; user reviews and performs Git actions.
@@ -102,3 +103,5 @@ Supporting goals:
 - Continued on user resume without restarting work. Completed missing strict finite-receipt validation and saved invocation prompt (observed RED then GREEN), added Flow intake/handoff UI and isolated browser RED/GREEN test. Final full102 tests pass (no skips); build and both browser checks pass. Updated local app is running and verified HTTP200/newFlowmode. Master and HEAD remain2cf5f5e; index empty; no commit/push/PR. Fresh independent branch review pending due sub-agent usage limit. Local review notes list actual changes and remaining R1 work.
 
 - Saved REMAINING_BUILD_PLAN.md with implemented work to preserve, pending independent review, partial ticket status, ordered remaining R1-001–014 work, live-input prerequisites and later multi-account scope. Updated both AGENTS files, backlog link and handoff so “continue what remains” resumes targeted unfinished work, not a rebuild. Documentation only; no code/tests rerun, no Git publication.
+
+- User explicitly requested publishing the feature branch. Found a clean branch at user-created commit b03143f, pushed/set upstream to origin/feature/flow-video-automation (already up to date), and verified the remote SHA matches HEAD. No master push, new commit, PR, or merge. Recorded the publication locally without committing these notes.

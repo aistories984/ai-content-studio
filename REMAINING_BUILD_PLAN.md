@@ -6,7 +6,7 @@ Last updated: November 3, 2026. Read this with the **Current handoff** in `WORK_
 
 Combine Director Studio and the YouTube skills into a working brief-to-video system following the full supplied film diagram. Use Google Flow for video generation. Release 1 ends with real downloaded takes, an accepted final video and a portable delivery bundle; the user uploads manually. Multi-account publishing is a later release. Growth and revenue are measured goals, not guaranteed outcomes.
 
-- Current local branch: `feature/flow-video-automation`, based on master `2cf5f5e`. The current work is unstaged and uncommitted.
+- Current branch: `feature/flow-video-automation`, based on master `2cf5f5e`. User committed the implementation/plans as `b03143f`; branch publication was explicitly requested and verified on GitHub at that commit. New publication notes remain local/uncommitted. Inspect actual Git state on resume; do not assume the implementation is still uncommitted.
 - Do not stage, commit, push, create a PR, merge, discard, or overwrite the user's work. User owns Git review/publication unless they explicitly authorize a particular action later.
 - Continue with active-session agents and durable saved state. An unattended worker is not implemented.
 - Preserve all twelve diagram obligations and human creative/spending gates. Select the relevant YouTube skills and retain actual outputs, receipts and downstream links.
