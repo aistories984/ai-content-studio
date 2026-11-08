@@ -3,6 +3,7 @@ from pathlib import Path
 from .store import Store, WORKFLOW, WORKFLOWS, workflow_for, Problem
 from .media import inspect_media
 from . import production, skill_runner
+from .film import FilmService
 
 
 def database():
@@ -22,6 +23,47 @@ def get_production_handoff(project_id: str, scene_id: str | None = None) -> dict
 def run_youtube_tool(project_id: str, tool_name: str, arguments: list[str], task_id: str, token: str) -> dict:
     """Run a fixed local YouTube helper into leased supporting notes; no approval or stage advance."""
     return skill_runner.run_tool(database(), project_id, tool_name, arguments, task_id, token)
+
+
+def get_speech_capabilities() -> dict:
+    """Read installed temporary speech voices; no synthesis or voice selection."""
+    from .audio import get_speech_capabilities as capabilities
+    return capabilities()
+
+
+def render_scratch_audio(project_id: str, scene_id: str, source: dict, task_id: str, token: str) -> dict:
+    """Synchronously render measured temporary audio under a live scene audio lease.
+
+    Explicit absolute PCM audio_file imports are allowed. Passing output enters
+    human review; no approval, task completion, provider call or spending occurs.
+    """
+    from .audio import AudioService
+    return AudioService(database()).render_scratch_audio(project_id, scene_id, source, task_id, token)
+
+
+def get_film_state(project_id: str) -> dict:
+    """Read film packages, director decisions and credit history; no browser connection implied."""
+    return FilmService(database()).get_state(project_id)
+
+
+def record_film_capability(project_id: str, payload: dict, task_id: str, token: str) -> dict:
+    """Save an observed Flow configuration under a live film task; does not inspect a browser."""
+    return FilmService(database()).record_capability(project_id, payload, task_id, token)
+
+
+def prepare_film_package(project_id: str, scene_id: str, payload: dict, task_id: str, token: str) -> dict:
+    """Pin approved film sources and exact observed settings for separate director review."""
+    return FilmService(database()).prepare_package(project_id, scene_id, payload, task_id, token)
+
+
+def reserve_film_attempt(package_id: str, task_id: str, token: str) -> dict:
+    """Reserve one exact authorized film allowance; never uploads or clicks Generate."""
+    return FilmService(database()).reserve_attempt(package_id, task_id, token)
+
+
+def record_film_result(attempt_id: str, payload: dict, task_id: str, token: str) -> dict:
+    """Append an observed result/reconciliation; a reported download is not verified local media."""
+    return FilmService(database()).record_result(attempt_id, payload, task_id, token)
 
 
 def list_projects() -> list[dict]:
@@ -160,4 +202,4 @@ def extract_sprites(project_id: str, scene_id: str, source_version_id: str, sett
     return database().pack_sprite_artifact(project_id, scene_id, source_version_id, settings, task_id, token)
 
 
-TOOLS = {fn.__name__: fn for fn in (list_projects, get_project, get_next_action, claim_task, heartbeat, register_artifact, validate_artifact, submit_for_review, finish_task, save_scene, get_workflow, list_workflows, get_artifact, prepare_generation, export_project, reserve_flow_attempt, record_flow_result, extract_sprites, create_production_project, get_production_handoff, run_youtube_tool)}
+TOOLS = {fn.__name__: fn for fn in (list_projects, get_project, get_next_action, claim_task, heartbeat, register_artifact, validate_artifact, submit_for_review, finish_task, save_scene, get_workflow, list_workflows, get_artifact, prepare_generation, export_project, reserve_flow_attempt, record_flow_result, extract_sprites, create_production_project, get_production_handoff, run_youtube_tool, get_film_state, record_film_capability, prepare_film_package, reserve_film_attempt, record_film_result, get_speech_capabilities, render_scratch_audio)}

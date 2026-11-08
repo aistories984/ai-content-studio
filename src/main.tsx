@@ -42,6 +42,7 @@ import {
   Scissors,
 } from "lucide-react";
 import "./styles.css";
+import { FilmPanel } from "./FilmPanel";
 
 type Json = Record<string, any>;
 type MediaFile = {
@@ -293,10 +294,12 @@ function Modal({
 }
 function FormFooter({
   busy,
+  disabled = false,
   onClose,
   label = "Save",
 }: {
   busy: boolean;
+  disabled?: boolean;
   onClose: () => void;
   label?: string;
 }) {
@@ -305,7 +308,7 @@ function FormFooter({
       <button type="button" className="button secondary" onClick={onClose}>
         Cancel
       </button>
-      <button className="button primary" disabled={busy}>
+      <button className="button primary" disabled={busy || disabled}>
         {busy ? (
           <LoaderCircle size={16} className="spin" />
         ) : (
@@ -731,7 +734,10 @@ function App() {
                     </div>
                   </section>
                   {isFlowFilm(project) && (
-                    <ProductionHandoff project={project} sceneId={sceneId} />
+                    <>
+                      <ProductionHandoff project={project} sceneId={sceneId} />
+                      <FilmPanel key={project.id} project={project} request={api} />
+                    </>
                   )}
                   {nav === "Workflow & agents" ? (
                     <section className="workflow-layout">
@@ -1311,8 +1317,9 @@ function App() {
                                 <p>Generation adapter not connected.</p>
                                 <small>
                                   Prepare and review the creative stages first.
-                                  Browser generation, spending controls and
-                                  original downloads are still being built.
+                                  Package review and local spending controls are
+                                  available above. Browser generation and verified
+                                  original downloads still need connection.
                                 </small>
                               </div>
                             ) : (
@@ -4725,7 +4732,11 @@ function DirectionForm({
   const [data, setData] = useState<Json>({
     title: project.title,
     brief: project.brief,
-    ...project.settings,
+    creative_locks: project.settings.creative_locks || "",
+    world_notes: project.settings.world_notes || "",
+    voice_direction: project.settings.voice_direction || "",
+    delivery_notes: project.settings.delivery_notes || "",
+    budget: project.settings.budget,
   });
   const f = useForm();
   return (
@@ -4819,25 +4830,37 @@ function AudioForm({
   onClose: () => void;
   onSaved: () => Promise<void>;
 }) {
-  const [scene, setScene] = useState(initialScene || ""),
+  const [scene, setScene] = useState(initialScene || project.scenes[0]?.id || ""),
     [source, setSource] = useState(""),
-    [advanced, setAdvanced] = useState(false);
+    [advanced, setAdvanced] = useState(false),
+    [speech, setSpeech] = useState<Json | null>(null),
+    [dirty, setDirty] = useState(false);
   const f = useForm();
+  function blankSource(sceneId: string) {
+    const selected = project.scenes.find(s => s.id === sceneId);
+    if (!selected) return "";
+    return JSON.stringify({
+      schema_version: 1, sequence_id: "SCRATCH", revision: "draft",
+      title: "Temporary dialogue · " + selected.title,
+      target_duration: selected.duration, fps: 30,
+      characters: { NARRATOR: { name: "Temporary narrator", color: "#64b5ff", voice: "", rate: 0 } },
+      shots: [{ id: "SHOT_01", start: 0, end: selected.duration }],
+      jobs: [{ id: "JOB_01", start: 0, end: selected.duration }],
+      lines: [{ id: "LINE_01", character: "NARRATOR", text: "", start: 0, slot_end: selected.duration }],
+      actions: [], generation_prompt: "",
+    }, null, 2);
+  }
   useEffect(() => {
-    api("/audio-template")
-      .then((data) => {
-        data.title =
-          "Temporary dialogue · " +
-          (project.scenes.find((s) => s.id === scene)?.title || "scene");
-        data.sequence_id = "SCRATCH";
-        data.generation_prompt = "";
-        setSource(JSON.stringify(data, null, 2));
-      })
+    let active = true;
+    setSource(blankSource(scene));
+    api("/audio-voices")
+      .then(data => { if (active) setSpeech(data); })
       .catch((e) =>
         f.run(async () => {
           throw e;
         }),
       );
+    return () => { active = false; };
   }, []);
   let parsed: Json | null = null;
   try {
@@ -4848,12 +4871,27 @@ function AudioForm({
     const p = structuredClone(parsed);
     p.lines[i][key] = value;
     setSource(JSON.stringify(p, null, 2));
+    setDirty(true);
+  }
+  const characters: Json = parsed?.characters && typeof parsed.characters === "object" && !Array.isArray(parsed.characters) ? parsed.characters : {};
+  const lines: Json[] = Array.isArray(parsed?.lines) ? parsed.lines : [];
+  const sourceShapeValid = !!parsed && Object.keys(characters).length > 0 && Object.values(characters).every(c => c && typeof c === "object" && typeof c.voice === "string") && lines.length > 0 && lines.every(line => line && typeof line === "object" && typeof line.character === "string" && typeof line.text === "string");
+  const chosen = project.scenes.find(s => s.id === scene);
+  const durationMatches = !!chosen && parsed?.target_duration === chosen.duration;
+  const voicesChosen = sourceShapeValid && lines.every(line => line.text.trim() && speech?.voices.some((v: Json) => v.id === characters[line.character]?.voice));
+  const scriptReady = project.settings.demo || project.stage_status.find(s => s.id === "script")?.complete;
+  function changeCharacter(id: string, key: string, value: unknown) {
+    if (!parsed) return;
+    const p = structuredClone(parsed);
+    p.characters[id] = { ...p.characters[id], [key]: value };
+    if (value === "" && key === "rate_wpm") delete p.characters[id].rate_wpm;
+    setSource(JSON.stringify(p, null, 2)); setDirty(true);
   }
   return (
     <Modal
       wide
       title="Generate temporary dialogue"
-      subtitle="Local Windows voices, measured timing, separate tracks. No API credits."
+      subtitle="Local temporary speech, measured timing and separate tracks. No API credits."
       onClose={onClose}
     >
       <form
@@ -4870,6 +4908,10 @@ function AudioForm({
       >
         <div className="form-body">
           <FormError error={f.error} />
+          {source && !sourceShapeValid && <p className="callout">The source must contain character voice settings and dialogue lines. Fix the full JSON source or reset to the blank scene template.</p>}
+          <p className="tiny-note">{speech ? speech.engine || "Native speech unavailable" : "Loading installed voices…"}. These voices are temporary timing references; final voice approval is separate.</p>
+          {speech?.issues?.map((issue: string, i: number) => <p key={i} className="callout">{issue}</p>)}
+          {!scriptReady && <p className="callout">Approve the screenplay before generating temporary dialogue.</p>}
           {!project.scenes.length ? (
             <p className="callout">
               Create a scene package first, then add its dialogue here.
@@ -4877,9 +4919,13 @@ function AudioForm({
           ) : (
             <Field label="Scene package">
               <select
+                aria-label="Scene package"
                 required
                 value={scene}
-                onChange={(e) => setScene(e.target.value)}
+                onChange={(e) => {
+                  setScene(e.target.value);
+                  if (!dirty) setSource(blankSource(e.target.value));
+                }}
               >
                 <option value="">Choose a package</option>
                 {project.scenes.map((s) => (
@@ -4891,19 +4937,37 @@ function AudioForm({
             </Field>
           )}
           <p className="callout">
-            The starter timing is 15 seconds: two voices, an opening beat, a
-            reaction, and an ending hold. Edit all timing and cast settings in
-            the JSON for other packages.
+            Select an installed scratch voice and enter dialogue from the approved screenplay.
+            The blank timing source matches the selected scene. Edit shots, cast and pauses in the full source when needed.
           </p>
-          {parsed?.lines?.map((line: Json, i: number) => (
+          {!durationMatches && scene && <p className="callout">Your edits were preserved. Update the full source to the selected scene duration, or reset it explicitly below.</p>}
+          {dirty && <button type="button" className="button secondary" onClick={() => { setSource(blankSource(scene)); setDirty(false); }}>Reset to blank scene template</button>}
+          {sourceShapeValid && Object.entries(characters).map(([id, character]) => (
+            <div className="audio-character-form" key={id}>
+              <Field label={`Scratch voice for ${id}`}>
+                <select aria-label={`Scratch voice for ${id}`} required value={character?.voice || ""} onChange={e => changeCharacter(id, "voice", e.target.value)}>
+                  <option value="">Choose an installed voice</option>
+                  {character?.voice && !speech?.voices.some((v: Json) => v.id === character.voice) && <option value={character.voice} disabled>{character.voice} — unavailable</option>}
+                  {speech?.voices.map((v: Json) => <option key={v.id} value={v.id}>{v.name} ({v.language})</option>)}
+                </select>
+              </Field>
+              {speech?.platform === "darwin" ? <Field label={`Speech rate for ${id} (words per minute)`} hint="Optional. Empty uses this voice's native speed. Actual timing is measured afterward.">
+                <input type="number" min="40" max="600" value={character?.rate_wpm ?? ""} onChange={e => changeCharacter(id, "rate_wpm", e.target.value === "" ? "" : Number(e.target.value))} />
+              </Field> : <Field label={`Windows speech rate for ${id}`}>
+                <input type="number" min="-10" max="10" value={character?.rate ?? 0} onChange={e => changeCharacter(id, "rate", Number(e.target.value))} />
+              </Field>}
+            </div>
+          ))}
+          {sourceShapeValid && lines.map((line: Json, i: number) => (
             <div className="audio-line-form" key={i}>
               <div className="subheading">
                 <span>
-                  {line.character} · {parsed?.characters[line.character]?.voice}
+                  {line.character} · {characters[line.character]?.voice}
                 </span>
               </div>
               <Field label={"Line " + (i + 1)}>
                 <textarea
+                  aria-label={"Line " + (i + 1)}
                   rows={2}
                   value={line.text}
                   onChange={(e) => changeLine(i, "text", e.target.value)}
@@ -4940,10 +5004,11 @@ function AudioForm({
           {advanced && (
             <Field label="Source JSON">
               <textarea
+                aria-label="Source JSON"
                 className="code-text"
                 rows={18}
                 value={source}
-                onChange={(e) => setSource(e.target.value)}
+                onChange={(e) => { setSource(e.target.value); setDirty(true); }}
               />
             </Field>
           )}
@@ -4953,7 +5018,8 @@ function AudioForm({
           </p>
         </div>
         <FormFooter
-          busy={f.busy || !project.scenes.length}
+          busy={f.busy}
+          disabled={!scene || !speech?.available || !voicesChosen || !durationMatches || !scriptReady}
           onClose={onClose}
           label="Generate scratch audio"
         />

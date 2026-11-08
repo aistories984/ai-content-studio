@@ -1,5 +1,30 @@
 # Local review: Flow intake and YouTube skill execution
 
+## November 8 update — usable native temporary dialogue
+
+- Native Mac speech and supplied PCM recording paths are connected to the shared guarded service and explicit voice/scene UI. Windows native interface is retained with mocked boundary coverage; this Mac did not verify actual Windows execution.
+- Synchronous leased agent rendering, asynchronous director jobs, immutable source/output evidence, same-artifact revisions, safe failures/overruns and no automatic creative approval.28agent operations, none approving budgets or art.
+- Four review findings closed: numeric-region voice discovery, speech evidence namespace collisions, recording alias binding and legacy Wan plan promotion into Flow. Final independent native-audio integration re-review PASS November8.
+- Fresh178tests/no skips, build and four browser checks PASS, including actual local speech and mobile source/voice controls. See combined validation and .tools/2026-11-08-native-audio-*.log.
+- Updated local Studio started process67720/session29871 on8767 after zero-active-job check; HTTP200/184voices/28tools verified. New work remains local/unstaged/uncommitted; no agent push/PR/merge.
+
+You can review the real temporary voice path; this does not produce a complete film. Actual image/comic/boards/Blender, Flow execution/download/render and pilot approvals remain pending.
+
+## November 6 update — film packages and credit controls
+
+Local branch remains feature/flow-video-automation at user commit6238eb8; new changes are unstaged/uncommitted. Earlier commits/publication were user-owned; the original snapshot below is historical.
+
+- Fixed Flow direction-save compatibility with immutable intake; browser RED/GREEN and independent fix review passed.
+- Added FilmService immutable package/capability/decision/allowance/attempt/result records, exact file/source/lease checks, cumulative scene/project caps, atomic account-isolated reservations, conservative observed-cost accounting and append-only recovery. No provider call occurs.
+- Added five safe agent operations (26 total), strict HTTP envelopes, separate director package/spending decisions, film review/credit UI and audit records in exports.
+- Independent foundation/service/integration/final whole-branch reviews passed with no outstanding findings; integration review found and fixed stale Refresh and ignored body identity fields, plus missing observation timestamp.
+- Final Python suite132 PASS/no skips16.715sec; build PASS; all3 final browser checks PASS. Film package browser verifies exact package/ref decisions, caps/allowance, agentunknown commitment after Refresh/reload, mobile and no page errors. Usage-limit/rebuild interruption was resolved and stable-build repeats passed.
+- Pilot selected: English24-second illustrated robot-gardening Short. Audience/voice and image/audio/Blender tool choices remain open. No real creative artifact, account authentication, paid spend, upload, downloaded provider take or final render was accepted.
+
+See [Flow film contracts](../FLOW_FILM_WORKFLOW.md), [remaining adapters](../../REMAINING_BUILD_PLAN.md) and [latest handoff](../../WORK_LOG.md). Updated app is running at http://127.0.0.1:8767/ in process59975/session58955; restart if its foreground session stops. No staging, commit, push, PR or merge performed.
+
+## Original November 3 snapshot
+
 Branch: `feature/flow-video-automation`, created from master `2cf5f5e`. Master and HEAD still point to that base; all edits are unstaged and uncommitted. Nothing was pushed and no PR was created. The user reviews, commits, opens the PR and merges.
 
 ## What changed

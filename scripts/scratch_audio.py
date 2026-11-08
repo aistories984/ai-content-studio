@@ -1,6 +1,6 @@
 """Local scratch dialogue -> measured timeline, stems, subtitles and Wan reference slices.
 
-Standard library only. Windows System.Speech synthesizes plain text; an optional
+Standard library only. Platform-native speech synthesizes plain text; an optional
 audio_file on each line accepts existing 48 kHz / mono / 16-bit PCM recordings.
 No uploads, API requests, approval inference, time stretching or silent trimming.
 """
@@ -20,6 +20,11 @@ import subprocess
 import sys
 import uuid
 import wave
+
+if __package__:
+    from .speech import synthesize_requests
+else:
+    from speech import synthesize_requests
 
 RATE = 48000
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +47,18 @@ def number(value, name):
 
 
 def validate(source):
+    if not isinstance(source, dict):
+        raise ValueError("Source must be an object")
+    lines = source.get("lines")
+    if not isinstance(lines, list) or len(lines) > 100:
+        raise ValueError("Dialogue must be a bounded list of at most 100 lines")
+    total_text = 0
+    for line in lines:
+        if not isinstance(line, dict) or not isinstance(line.get("text"), str):
+            raise ValueError("Each dialogue line requires text")
+        total_text += len(line["text"])
+        if total_text > 50000:
+            raise ValueError("Dialogue exceeds 50000 total text characters")
     if source.get("schema_version") != 1:
         raise ValueError("schema_version must be 1")
     safe_id(source["sequence_id"])
@@ -62,6 +79,10 @@ def validate(source):
         rate = char.get("rate", 0)
         if isinstance(rate, bool) or not isinstance(rate, int) or not -10 <= rate <= 10:
             raise ValueError(f"{key} rate must be an integer from -10 to 10")
+        if "rate_wpm" in char:
+            wpm = char["rate_wpm"]
+            if isinstance(wpm, bool) or not isinstance(wpm, int) or not 40 <= wpm <= 600:
+                raise ValueError(f"{key} rate_wpm must be an integer from 40 to 600")
     for group in ("shots", "jobs"):
         items = source[group]
         if not items:
@@ -169,24 +190,30 @@ def render(source_path, output_root):
     for folder in ("lines", "stems", "jobs"):
         (out / folder).mkdir()
     dump(out / "source.json", source)
-    requests = []
+    requests, line_engines = [], {}
     for line in source["lines"]:
         dest = out / "lines" / f"{line['id']}.wav"
         if line.get("audio_file"):
             recording = (source_path.parent / line["audio_file"]).resolve()
             read_wave(recording)
             shutil.copyfile(recording, dest)
+            line_engines[line["id"]] = "supplied PCM recordings"
         else:
             char = source["characters"][line["character"]]
-            requests.append({"text": line["text"], "voice": char["voice"], "rate": char.get("rate", 0), "output": str(dest)})
+            request = {"text": line["text"], "voice": char["voice"], "rate": char.get("rate", 0), "output": str(dest)}
+            if "rate_wpm" in char:
+                request["rate_wpm"] = char["rate_wpm"]
+            requests.append(request)
     if requests:
-        request_path = out / "synthesis-request.json"
-        dump(request_path, {"lines": requests})
-        subprocess.run(["powershell.exe", "-NoProfile", "-NonInteractive", "-File", str(ROOT / "scripts" / "synthesize.ps1"), "-RequestPath", str(request_path)], check=True, timeout=180)
+        synthesis = synthesize_requests(requests, out)
+        for line in source["lines"]:
+            if not line.get("audio_file"):
+                line_engines[line["id"]] = synthesis["engine"]
     lines, samples_by_id = [], {}
     for original in source["lines"]:
         samples = read_wave(out / "lines" / f"{original['id']}.wav")
         measured = dict(original)
+        measured["audio_engine"] = line_engines[original["id"]]
         measured.update(duration=len(samples) / RATE, end=original["start"] + len(samples) / RATE, file=f"lines/{original['id']}.wav")
         lines.append(measured)
         samples_by_id[original["id"]] = samples
@@ -231,7 +258,8 @@ def render(source_path, output_root):
             "note": "Local preparation only. Character references, approved Blender renders, provider validation, hosted media and explicit generation approval are still required."}
     dump(out / "wan-plan.json", plan)
     report = {**source, "lines": lines, "source_sha256": digest, "built_at": datetime.now(timezone.utc).isoformat(),
-              "engine": "Windows System.Speech / supplied PCM recordings", "sample_rate": RATE,
+              "engine": " / ".join(sorted(set(line_engines.values()))) or "supplied PCM recordings",
+              "temporary_only": True, "sample_rate": RATE,
               "actual_duration": length / RATE, "mix_gain": gain,
               "peak_dbfs": 20 * math.log10(max(abs(v) for v in mixed) / 32768) if any(mixed) else None,
               "timing_passed": not issues, "issues": issues, "approval": None, "exported_jobs": jobs}
@@ -258,7 +286,7 @@ def main():
     try:
         _, report = render(args.source, args.output_root)
         return 0 if report["timing_passed"] else 2
-    except (ValueError, KeyError, TypeError, OSError, subprocess.SubprocessError) as error:
+    except (ValueError, KeyError, TypeError, RuntimeError, OSError, subprocess.SubprocessError) as error:
         print(f"Scratch audio failed: {error}", file=sys.stderr)
         return 1
 

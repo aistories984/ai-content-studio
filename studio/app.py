@@ -18,10 +18,11 @@ from .bootstrap import seed
 from .media import inspect_media
 from .store import Store, Problem, ROOT, WORKFLOW, WORKFLOWS, workflow_for, encode, direction_hash
 from . import production, skill_runner
+from .film import FilmService, fields as film_fields
+from .audio import AudioService, get_speech_capabilities
 
 store = Store()
 DIRECTOR_TOKEN = secrets.token_urlsafe(32)
-audio_lock = threading.Lock()
 
 
 @asynccontextmanager
@@ -97,6 +98,50 @@ def run_youtube_tool(project: str, payload: dict):
 @app.get("/api/projects/{project}")
 def project_detail(project: str):
     return store.project(project)
+
+
+@app.get("/api/projects/{project}/film")
+def film_state(project: str):
+    return FilmService(store).get_state(project)
+
+
+@app.post("/api/projects/{project}/film/capabilities")
+def film_capability(project: str, body: dict):
+    film_fields(body, {"payload", "task_id", "token"})
+    return FilmService(store).record_capability(project, body.get("payload"), body.get("task_id"), body.get("token"))
+
+
+@app.post("/api/projects/{project}/film/packages")
+def film_package(project: str, body: dict):
+    film_fields(body, {"scene_id", "payload", "task_id", "token"})
+    return FilmService(store).prepare_package(project, body.get("scene_id"), body.get("payload"), body.get("task_id"), body.get("token"))
+
+
+@app.post("/api/projects/{project}/film/budget")
+def film_budget(project: str, body: dict):
+    return FilmService(store).set_budget(project, body)
+
+
+@app.post("/api/film/packages/{package}/review")
+def film_review(package: str, body: dict):
+    return FilmService(store).review_package(package, body)
+
+
+@app.post("/api/film/packages/{package}/allowance")
+def film_allowance(package: str, body: dict):
+    return FilmService(store).approve_allowance(package, body)
+
+
+@app.post("/api/film/packages/{package}/reserve")
+def film_reserve(package: str, body: dict):
+    film_fields(body, {"task_id", "token"})
+    return FilmService(store).reserve_attempt(package, body.get("task_id"), body.get("token"))
+
+
+@app.post("/api/film/attempts/{attempt}/result")
+def film_result(attempt: str, body: dict):
+    film_fields(body, {"payload", "task_id", "token"})
+    return FilmService(store).record_result(attempt, body.get("payload"), body.get("task_id"), body.get("token"))
 
 
 @app.patch("/api/projects/{project}")
@@ -202,58 +247,23 @@ def audio_template():
     return json.loads((ROOT / "examples/timing-demo.json").read_text(encoding="utf-8"))
 
 
-def run_audio(job, project, scene_id, source, inputs, revision, direction):
-    with audio_lock:
-        store.update_job(job, "running", {"message": "Synthesizing temporary dialogue locally"})
-        try:
-            folder = store.root / "work" / job
-            folder.mkdir(parents=True)
-            source_path = folder / "source.json"
-            source_path.write_text(encode(source), encoding="utf-8")
-            process = subprocess.run([sys.executable, str(ROOT / "scripts/scratch_audio.py"), str(source_path), "--output-root", str(folder)], capture_output=True, text=True, timeout=240)
-            if process.returncode not in (0, 2):
-                raise ValueError(process.stderr.strip() or "Scratch audio failed.")
-            result = json.loads(process.stdout)
-            output = Path(result["output"])
-            report = json.loads((output / "timing.json").read_text(encoding="utf-8"))
-            current_project = store.project(project)
-            current = next(s for s in current_project["scenes"] if s["id"] == scene_id)
-            if current["revision"] != revision or direction_hash(current_project) != direction:
-                raise ValueError("Scene changed during synthesis. Audio is retained in the work folder; rerun against the current direction.")
-            files = [output / "mix.wav"] + sorted((output / "stems").glob("*.wav")) + [output / "timing.json", output / "dialogue.srt", output / "blender-timing.json", source_path]
-            record = store.add_version(project, {"title": source["title"], "kind": "audio", "stage": "audio", "scene_id": scene_id, "inputs": inputs, "content": "\n\n".join(f"{line['character']} · {line['start']:g}s\n{line['text']}" for line in source["lines"]), "prompt": source.get("generation_prompt", ""), "metadata": {**inspect_media(output / "mix.wav"), "timing_passed": report["timing_passed"], "timing": report, "temporary_audio": True, "reference_map": "\n".join(f"{key} → {v['color']} → {v['voice']}" for key, v in source["characters"].items())}}, [(f.name, f) for f in files], actor="audio worker")
-            if report["timing_passed"]:
-                store.submit(record["version_id"], "audio worker")
-            store.update_job(job, "completed" if report["timing_passed"] else "needs_changes", {**record, "issues": report["issues"], "duration": report["actual_duration"]})
-        except Exception as error:
-            store.update_job(job, "failed", {"message": str(error)[:2000]})
+@app.get("/api/audio-voices")
+def audio_voices():
+    return get_speech_capabilities()
+
+
+def run_audio(prepared):
+    try:
+        AudioService(store).execute(prepared)
+    except Problem:
+        pass  # The shared service records safe failure and retains all local output.
 
 
 @app.post("/api/projects/{project}/audio")
 def audio(project: str, payload: dict):
-    if workflow_for(store.project(project))["id"] == "sprite-to-flow":
-        raise Problem("Scratch dialogue belongs to a film project; use sprite extraction for this mode.")
-    source = payload.get("source")
-    if not isinstance(source, dict) or len(encode(source)) > 50000:
-        raise Problem("Provide a scratch audio source under 50 KB.")
-    from scripts.scratch_audio import validate
-    try:
-        validate(source)
-    except (ValueError, KeyError, TypeError) as error:
-        raise Problem(str(error))
-    if any("audio_file" in line for line in source["lines"]):
-        raise Problem("Use the local CLI to import existing recordings. The dashboard synthesizes plain text.")
-    p = store.project(project)
-    scene = next((s for s in p["scenes"] if s["id"] == payload.get("scene_id")), None)
-    if not scene or source["target_duration"] != scene["duration"]:
-        raise Problem("The source duration must match the selected scene package.")
-    action = store.next_action(project, scene["id"])
-    if not p["settings"].get("demo") and (action["stage"] not in ("audio", "boards", "blender", "wan", "edit", "complete")):
-        raise Problem("Approve the screenplay before generating temporary audio.", 409)
-    inputs = [a["approved_version_id"] for a in p["artifacts"] if a["stage"] in ("premise", "comic", "script") and a["approved_version_id"]]
-    job = store.create_job(project, "scratch_audio", scene["id"])
-    threading.Thread(target=run_audio, args=(job, project, scene["id"], source, inputs, scene["revision"], direction_hash(p)), daemon=True).start()
-    return {"job_id": job, "status": "queued"}
+    prepared = AudioService(store).prepare_director(project, payload.get("scene_id"), payload.get("source"))
+    threading.Thread(target=run_audio, args=(prepared,), daemon=True).start()
+    return {"job_id": prepared.job_id, "status": "queued"}
 
 
 def run_sprite_pack(job, project, scene_id, source_version_id, settings):

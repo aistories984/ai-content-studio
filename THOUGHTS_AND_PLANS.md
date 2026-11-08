@@ -20,6 +20,14 @@ The intended product is a unified agent framework for video production, automati
 
 ## Ideas and daily notes
 
+### November 6, 2026 — First real-video acceptance example selected
+
+User selected a 24-second illustrated Short about a robot learning to garden for the eventual real-video acceptance test, then specified English. This is a single pilot, not a permanent niche/channel restriction. Audience/voice, selected image/audio/Blender tools/assets and detailed story/shot choices remain to be established and reviewed. This selection does not approve any creative artifact, asset upload, paid generation, model/settings or credit allowance.
+
+### November 4, 2026 — Proposed third repository
+
+User wants to add and use another repository alongside Director Studio and the YouTube skills. Repository URL and intended capability have not been supplied. Review its README/instructions, license, dependencies, capabilities and overlap with the remaining build before deciding the integration approach. Preserve the existing golden rule, user-owned Git workflow and recorded unfinished work. No third repository has been downloaded, installed or integrated.
+
 ### November 3, 2026 — One studio, different channels and content types
 
 User clarified the first niche question: the product must support multiple channels with different subjects/content, rather than being fixed to one niche. Broad discovery across categories should be an option. Research should identify evidence-backed opportunities and original angles, then a selected idea becomes a concrete channel/project brief and follows the full Director Studio diagram with relevant YouTube skills. Future saved channel profiles and publishing destinations must remain separate. The objective is a useful revenue-supporting all-in-one studio; no topic or tool guarantees viral reach or income. This clarifies the existing multi-channel goal; it does not mark profile management, monitoring or publishing complete. No particular production topic was selected.

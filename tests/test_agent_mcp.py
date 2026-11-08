@@ -24,13 +24,19 @@ class McpIntegrationTests(unittest.IsolatedAsyncioTestCase):
                                             "register_artifact", "validate_artifact", "submit_for_review", "finish_task", "save_scene",
                                             "get_workflow", "list_workflows", "get_artifact", "prepare_generation", "export_project",
                                             "reserve_flow_attempt", "record_flow_result", "extract_sprites", "create_production_project",
-                                            "get_production_handoff", "run_youtube_tool"})
+                                            "get_production_handoff", "run_youtube_tool", "get_film_state", "record_film_capability",
+                                            "prepare_film_package", "reserve_film_attempt", "record_film_result", "get_speech_capabilities", "render_scratch_audio"})
                     self.assertFalse(any("approv" in name or "review" in name and name != "submit_for_review" for name in names))
 
                     async def call(name, arguments):
                         result = await session.call_tool(name, arguments)
                         self.assertFalse(result.isError, result.content)
                         return json.loads(result.content[0].text)
+
+                    capabilities = await call("get_speech_capabilities", {})
+                    self.assertEqual(set(capabilities), {"platform", "engine", "available", "voices", "issues", "temporary_only"})
+                    self.assertTrue(capabilities["temporary_only"])
+                    self.assertEqual(len(names), 28)
 
                     action = await call("get_next_action", {"project_id": project})
                     self.assertEqual(action["stage"], "premise")
@@ -52,6 +58,9 @@ class McpIntegrationTests(unittest.IsolatedAsyncioTestCase):
                     receipt = store.file_path(saved["version_id"], 0)[0].read_text()
                     self.assertNotIn(claim["token"], receipt)
                     self.assertNotIn(claim["token"], json.dumps(handoff))
+                    film_state = await call("get_film_state", {"project_id": flow["id"]})
+                    self.assertEqual(film_state["packages"], [])
+                    self.assertFalse(any(film_state["automation"].values()))
 
 
 if __name__ == "__main__":

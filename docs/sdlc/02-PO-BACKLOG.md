@@ -40,7 +40,7 @@ Trace: BA-F03/F06/F13, BA-A01; SDET R1-02/04/05, G0. Evidence: reviewed mapping,
 
 ### R1-002 — Persist brief and combined-skill task handoff
 
-**P0 · Draft/design-review · Owner: Developer · Depends: R1-001**
+**P0 · In progress: intake/helper handoff implemented/reviewed; authored production outputs/downstream coverage remain · Owner: Developer · Depends: R1-001**
 
 Story: As creator, I describe a project and receive the next permissible task and precise missing inputs.
 
@@ -54,7 +54,7 @@ Trace: BA-F01/F02/F13; SDET R1-01/03. Evidence: intake/handoff roundtrip, missin
 
 ### R1-003 — Add film-specific durable state and migration
 
-**P0 · Draft/design-review · Owner: Developer · Depends: R1-001**
+**P0 · In progress: offline state implemented/reviewed November 6; verified media receipts and production integration remain · Owner: Developer · Depends: R1-001**
 
 Story: As operator, I preserve project history and approved inputs across revisions and interruption.
 
@@ -67,7 +67,7 @@ Trace: BA-F05/F10/F13, BA-A05/06; SDET R1-02/03/04. Evidence: migration, contrac
 
 ### R1-004 — Build exact allowance and attempt recovery rules
 
-**P0 · Draft/design-review · Owner: Developer · Depends: R1-003**
+**P0 · Offline implemented/reviewed November 6; live execution/recovery acceptance remains · Owner: Developer · Depends: R1-003**
 
 Story: As budget owner, I bound attempts and reconcile uncertainty before another paid action.
 
@@ -80,7 +80,7 @@ Trace: BA-F07/F08/F09/F13, BA-A05/06; SDET R1-06/07, recovery protocol. Evidence
 
 ### R1-005 — Implement package/spend review and blocker views
 
-**P0 · Draft/design-review · Owner: Developer · Depends: R1-002/003/004**
+**P0 · Local UI implemented/reviewed November 6; full production acceptance remains · Owner: Developer · Depends: R1-002/003/004**
 
 Story: As director, I review exact versions, references and financial scope before deciding.
 
@@ -106,12 +106,12 @@ Trace: BA-F02/F03/F04/F05, BA-A01; SDET R1-01/02/04. Evidence: offline actual ar
 
 ### R1-007 — Measure audio and prepare boards/references
 
-**P1 · Draft/design-review · Owner: Developer; human creative director · Depends: R1-006**
+**P1 · In progress: native temporary audio implemented/reviewed November8; final casting and boards/reference production remain · Owner: Developer; human creative director · Depends: R1-006**
 
 Story: As director, I approve actual timing and clean, reconstructable visual inputs.
 
 - [ ] Validate configured recording/synthesis path and rights; recorded audio supported without assuming Windows TTS is cross-platform final voice.
-- [ ] Persist measured real mix/stems/cues, preserve overruns, and express 2–15 whole-second packages at 30 fps without substituting word-count estimates.
+- [x] Persist measured real mix/stems/cues, preserve overruns, and express 2–15 whole-second packages at 30 fps without substituting word-count estimates. Native Mac speech and shared guarded service verified November8; actual pilot timing remains unapproved.
 - [ ] Register labeled boards separately from clean upload references, with ordered roles, character/prop IDs and pinned hashes.
 - [ ] Timing/board revisions invalidate dependents; require human timing and board/prompt decisions before subsequent stages.
 

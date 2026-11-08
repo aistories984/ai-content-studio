@@ -6,9 +6,11 @@ This repository combines Director Studio with 11 YouTube skills under `.agents/s
 
 Read [WORK_LOG.md](WORK_LOG.md) first for the goal and handoff. See [the integration design](docs/superpowers/specs/2026-11-02-unified-foundation-design.md) and [YouTube capabilities](REPO_OVERVIEW.md).
 
+Use [PROJECT_STATUS.md](PROJECT_STATUS.md) for the project chart, Done/In progress/Pending checklist, required inputs and next work.
+
 Next product milestone: [SDLC agenda and four-role team](docs/sdlc/README.md), [14-ticket backlog](docs/sdlc/02-PO-BACKLOG.md), and [R1 Flow video design](docs/superpowers/specs/2026-11-03-flow-video-r1-design.md). R1 targets actual reviewed/downloaded Flow video and final delivery with manual upload; multi-account social publishing is later scope. These planning documents do not indicate that the missing automation is implemented.
 
-Local feature-branch work adds a Google Flow film project type with validated Short/long briefs, a combined-skill handoff, and an allowlisted runner for all six YouTube tools. Saved outputs carry source/input/dependency hashes and remain subject to human review. See [local review notes](docs/sdlc/05-LOCAL-REVIEW.md), [combined validation](docs/COMBINED_VALIDATION.md), and [usage](docs/youtube/WORKFLOW.md). Flow browser generation, credit controls, real production asset adapters, final rendering and publishing remain future work. Changes are local and uncommitted for user review.
+Local feature-branch work adds a Google Flow film project type with validated Short/long briefs, a combined-skill handoff, and an allowlisted runner for all six YouTube tools. Saved outputs carry source/input/dependency hashes and remain subject to human review. Film package snapshots, separate director package/spending decisions and conservative credit/attempt accounting have shared agent/HTTP interfaces and review screens; see [Flow film usage](docs/FLOW_FILM_WORKFLOW.md). Native temporary dialogue is also connected: explicitly select an installed voice, render measured audio/stems/cues and submit for human review through the shared guarded service. Actual image/comic/boards/Blender production, Flow browser generation, original-download verification, final rendering and publishing remain future work. Latest changes stay local and uncommitted for user review. See [combined validation](docs/COMBINED_VALIDATION.md) and [YouTube usage](docs/youtube/WORKFLOW.md).
 
 
 Director Studio is a local AI video-production dashboard with versioned artifacts, prompts beside previews, human approval gates, scene direction, scratch audio, a rough-cut timeline, and a reusable CLI/MCP agent interface.
@@ -43,9 +45,11 @@ Open `http://127.0.0.1:8767`. The server runs in the foreground; Ctrl+C stops it
 
 FFmpeg and FFprobe are required for sprite extraction and non-WAV media inspection. This prepared checkout has ARM Mac binaries under `.tools/media/node_modules/@ffmpeg-installer/darwin-arm64/` and `.tools/media/node_modules/@ffprobe-installer/darwin-arm64/`. On another machine, install both for its platform and put them on PATH. The Python lock now installs `pywin32` only on Windows.
 
-Windows System.Speech synthesis does not run on macOS/Linux. Provide compatible WAV recordings with `audio_file` for measured timing; no substitute voice provider is silently selected.
+Temporary dialogue uses explicitly selected installed voices: macOS `say` on Mac, System.Speech on Windows. Other platforms can supply compatible PCM recordings through the CLI. The dashboard discovers voices and starts with blank, scene-sized dialogue; no final voice provider is selected automatically. A local speech restriction can produce an empty file, which is rejected instead of recorded as success.
 
 Open this **repository root** in Codex to discover its project-local skills. Read [the combined workflow](docs/youtube/WORKFLOW.md) for skill selection, creator voice setup, shared CLI handoffs, and current limits. No global Claude plugin, API key, or paid generation is needed for local validation.
+
+For VS Code/Pylance, `.vscode/settings.json` points Python at this repository's `.venv`. If VS Code previously selected another interpreter, run **Python: Select Interpreter** from the Command Palette and select `.venv/bin/python` (Windows: `.venv\Scripts\python.exe`). Reload the window if stale import warnings remain. FastAPI and TestClient belong to that environment, not macOS's system Python.
 
 ### Windows setup
 
@@ -135,7 +139,7 @@ Then open <http://127.0.0.1:8766/OPEN_TIMING_DEMO.html>. The server listens on t
 
 Copy `examples/timing-demo.json` into a new sequence file. Keep stable IDs for characters, lines, shots and jobs. Set each line's `start`, `slot_end`, `character` and `text`. Add silent action beats and camera descriptions. The `jobs` list describes generation boundaries. Use a 15-second sequence and one job as the default.
 
-Set a locally installed voice per character. Current tested choices are `Microsoft David Desktop` and `Microsoft Zira Desktop`. These are deliberately temporary voices. `rate` defaults to zero; do not speed up dialogue merely to force it into a slot. Rewrite or reschedule first.
+Set an explicitly installed voice per character. The original example names Windows voices; replace those names with your selected installed voices on Mac. Use the dashboard's voice list or `get_speech_capabilities` through CLI/MCP. The Mac path was verified with the installed Albert voice for technical QA; this is not final voice casting. Windows `rate` stays between -10 and10. On Mac keep `rate:0` for native speed, or set explicit integer `rate_wpm` between40 and600. Do not speed up dialogue merely to force it into a slot; rewrite or reschedule first.
 
 For an existing recording or a different TTS engine, add `audio_file` to a dialogue line. Paths resolve relative to the sequence JSON. Files must be 48 kHz, mono, 16-bit PCM WAV. The text field remains the intended transcript; the tool does not transcribe supplied audio or verify that it matches the text.
 

@@ -96,6 +96,9 @@ class Store:
             CREATE INDEX IF NOT EXISTS review_version ON reviews(version_id);
             """)
 
+            from .film import initialize_schema
+            initialize_schema(db)
+
     @contextmanager
     def db(self, write=False):
         db = sqlite3.connect(self.db_path, timeout=20)
@@ -329,7 +332,7 @@ class Store:
             return {"stage": stage["id"], "name": stage["name"], "state": "awaiting_review" if waiting else "ready", "instruction": stage["instruction"], "deliverable": stage["deliverable"], "checks": stage["checks"], "inputs": inputs, "scene_id": scene_id, "needs_scene": stage["scope"] == "scene" and not scene_id, "feedback": [r for a in items for v in a["versions"][:1] for r in v["reviews"]], "review_versions": [a["latest"]["id"] for a in waiting]}
         return {"stage": "complete", "name": "Complete", "state": "complete", "inputs": [], "instruction": "All required stages have approved artifacts."}
 
-    def add_version(self, project, payload, uploaded=None, actor="director", enforce_gate=False):
+    def add_version(self, project, payload, uploaded=None, actor="director", enforce_gate=False, *, guard=None):
         kind = payload.get("kind", "notes")
         selected_workflow = workflow_for(self.project(project))
         stage = payload.get("stage", selected_workflow["stages"][0]["id"])
@@ -412,6 +415,8 @@ class Store:
                     files.append({"name": Path(filename).name, "path": dest.relative_to(self.root).as_posix(), "mime": mime, "size": size, "sha256": hashlib.sha256(dest.read_bytes()).hexdigest()})
             if not (files or content or prompt):
                 raise Problem("Add a file, script, notes or prompt before saving.")
+            if guard is not None:
+                guard(db, p)
             version = {"content": content, "prompt": prompt, "metadata": metadata, "inputs": list(dict.fromkeys(inputs)), "files": files, "author": actor, "submitted": False, "scene_id": scene_id, "scene_revision": scene["revision"] if scene else None, "direction_hash": direction_hash(p), "task_id": payload.get("task_id")}
             version["hash"] = hashlib.sha256(encode(version).encode()).hexdigest()
             number = previous["number"] + 1 if previous else 1
@@ -764,7 +769,7 @@ class Store:
         record = self.add_version(project, payload, files, actor="sprite processor", enforce_gate=bool(task_id))
         return {**record, "output": str(folder), "qc": result["qc"], "human_review_required": True}
 
-    def submit(self, version_id, actor="agent"):
+    def submit(self, version_id, actor="agent", *, guard=None):
         record = self.get_version(version_id)
         checks = self.checks(version_id)
         if not checks["passed"]:
@@ -772,6 +777,8 @@ class Store:
         with self.db(True) as db:
             row = self.required(db, "versions", version_id)
             value = json.loads(row["data"])
+            if guard is not None:
+                guard(db, self._project(db, record["project_id"]))
             value["submitted"] = True
             db.execute("UPDATE versions SET data=? WHERE id=?", (encode(value), version_id))
             self.event(db, record["project_id"], "review", f"Submitted {record['artifact']['title']} v{row['number']} for review", actor)
@@ -907,6 +914,8 @@ class Store:
             self.required(db, "projects", project)
             if kind == "sprite_pack" and db.execute("SELECT 1 FROM jobs WHERE project_id=? AND scene_id=? AND kind=? AND status IN ('queued','running')", (project, scene_id, kind)).fetchone():
                 raise Problem("Sprite extraction is already running for this animation.", 409)
+            if kind == "scratch_audio" and db.execute("SELECT 1 FROM jobs WHERE project_id=? AND scene_id=? AND kind=? AND status IN ('queued','running')", (project, scene_id, kind)).fetchone():
+                raise Problem("Temporary audio is already running for this scene.", 409)
             db.execute("INSERT INTO jobs VALUES(?,?,?,?,?,?,?,?)", (key, project, scene_id, kind, "queued", encode(data or {}), now(), now()))
             self.event(db, project, "job", f"Queued {kind}")
         return key
@@ -926,6 +935,9 @@ class Store:
             archive.writestr("project.json", encode(p))
             archive.writestr("workflow.json", encode(workflow_for(p)))
             archive.writestr("timeline.json", encode(p["timeline"]))
+            if p["workflow_id"] == "comic-to-flow":
+                from .film import FilmService
+                archive.writestr("film-production.json", encode(FilmService(self).get_state(project)))
             archive.writestr("README.txt", "Director Studio project export. project.json includes version hashes, prompts, reviews and dependency IDs. Files under assets/ are immutable sources. timeline.json records editable in/out points. Secrets and API credentials are not included.\n")
             included = set()
             for a in p["artifacts"]:

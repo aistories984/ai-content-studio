@@ -1,6 +1,8 @@
 # Remaining build plan
 
-Last updated: November 3, 2026. Read this with the **Current handoff** in `WORK_LOG.md` to resume. Detailed ticket requirements remain in `docs/sdlc/02-PO-BACKLOG.md`.
+Last updated: November 8, 2026. Read this with the **Current handoff** in `WORK_LOG.md` to resume. Detailed ticket requirements remain in `docs/sdlc/02-PO-BACKLOG.md`.
+
+User-facing chart/checklist: [PROJECT_STATUS.md](PROJECT_STATUS.md). Keep its specific completion statuses synchronized with this detailed plan after meaningful work.
 
 ## Goal and operating rules
 
@@ -35,7 +37,7 @@ Combine Director Studio and the YouTube skills into a working brief-to-video sys
 
 **Finish in reviewable milestones:** (1) independent review and remaining contract gaps; (2) durable film package/credit state and review UI; (3) connected research/story/comic/script/audio/boards/Blender production; (4) live Flow preflight, guarded generation and original downloads; (5) final assembly/upload assets; (6) real twelve-obligation SDET pilot. Reuse completed intake/helper/UI work. For each milestone use BA requirements → PO acceptance criteria → Developer changes → SDET evidence, with user-owned Git review. Software work can proceed before login; live compatibility should be checked early enough to avoid designing around unsupported Flow inputs.
 
-**First concrete restart task:** complete independent review of the current runner/UI, then resolve remaining R1-001/002 contract gaps and implement R1-003 film state with R1-004 credit controls. Do not begin a paid production merely to demonstrate the dashboard.
+**First concrete restart task:** native temporary audio is now connected, independently reviewed and verified alongside the existing intake/helper/package/credit/UI work. November8 final178 tests/build/four browser checks passed. Next select/connect real image/page production and Blender tools (R1-006/007/008) and verify live Flow browser capabilities (R1-009), then generation/download/render and pilot acceptance. English24-second illustrated robot-gardening pilot is selected; audience/final voice/creative artifacts remain unapproved. Do not rebuild completed temporary audio, intake, helpers or credit controls.
 
 ## Golden rule — required SOP and skill evidence
 
@@ -47,11 +49,11 @@ User reaffirmed November 3: this diagram is the production contract. Preserve al
 | 02 Premise and ideas | Stage and review gate exist; sourced research and authored premise adapter remain. |
 | 03 Ten-page comic | Required stage/deliverable retained; real page creation and visual approval remain. |
 | 04 Full screenplay | Required stage retained; actual approved-comic adaptation and shot packages remain. |
-| 05 Scratch audio and timing | Existing audio tooling/measurement retained; production adapter and actual approved timing remain. |
+| 05 Scratch audio and timing | Native temporary-speech/recording adapter, explicit voice UI, measured mix/stems/SRT/cues and guarded registration connected. Actual pilot dialogue/timing and final voice still require creative approval. |
 | 06 Boards and references | Existing versioned artifact/review contract retained; real boards and clean-reference production remain. |
 | 07 Blender previs | Required stage and editable-file/preview contract retained; real Blender production/verification remain. |
-| 08 Pin generation package | Mapped to Flow; durable film package, exact input pins and live capability preflight remain. |
-| 09 Approve paid request | Required by contract; film credit/attempt allowance, reservation and recovery implementation remain. Generation is blocked. |
+| 08 Pin generation package | Immutable exact prompt/settings/source/file package snapshots and operator capability records implemented; live browser capability verification remains. |
+| 09 Approve paid request | Separate human package/spend decisions, project/scene cumulative caps, atomic reservations and conservative recovery ledger implemented/tested offline; live browser execution/recovery proof remains. Generation is blocked. |
 | 10 Generate video | Google Flow browser provider selected; film browser execution adapter remains. No silent Wan fallback. |
 | 11 Review scene takes | Review obligation retained; original Flow download, provider trace and actual take acceptance remain. |
 | 12 Edit and deliver | Existing edit/review contracts retained; final render, captions/audio, manifest and real delivery acceptance remain. |
@@ -79,6 +81,11 @@ Verification November 3: full Python suite **102 passed, no skips** (`.tools/gol
 - [x] Added combined-skill handoff with source hashes, reasons for deferred skills and current/historical receipt tracking.
 - [x] Added allowlisted execution of six real local YouTube tools, strict argument/file/JSON checks, task/source revalidation, receipts and shared HTTP/CLI/MCP operations.
 - [x] Added Flow project intake and evidence UI, retaining existing Wan/sprite modes and explicit missing-adapter status.
+- [x] Added additive immutable film package/capability/decision/allowance/attempt/result tables, source/file/currentness checks and conservative cumulative credit accounting; 25 focused tests and independent service review passed.
+- [x] Added five agent-safe film operations (26 total), strict HTTP envelopes, separate director package/spend review, dashboard cap/attempt history and film-production.json audit exports. No Generate button or live readiness claim.
+- [x] November6 final verification:132tests/no skips, production build, all3 isolated browser checks and independent whole-branch review PASS. This does not satisfy real-provider acceptance.
+- [x] Fixed Flow direction-save regression; isolated browser tests cover unchanged intake, exact package/ref review, spending decisions, unknown commitment after Refresh/reload and desktop/mobile layout.
+- [x] Connected real native temporary speech and supplied-recording rendering through shared guarded HTTP/CLI/MCP service, explicit scene-sized voice UI and human review. Final November8:178 tests/no skips, build, four browsers and independent native-audio integration review PASS; no paid/provider operation.
 - [x] Verified this local slice: 102 Python tests with no skips, frontend production build and both isolated browser checks. This is recorded evidence from November 3, not a claim that future edits or real Flow execution have passed.
 
 Review evidence: `docs/sdlc/05-LOCAL-REVIEW.md` and `docs/COMBINED_VALIDATION.md`. Implementation locations: `studio/production.py`, `studio/skill_runner.py`, `studio/store.py`, `studio/agent_tools.py`, `studio/app.py`, `src/main.tsx`, and the associated tests.
@@ -86,8 +93,8 @@ Review evidence: `docs/sdlc/05-LOCAL-REVIEW.md` and `docs/COMBINED_VALIDATION.md
 ## Next action
 
 1. Inspect the current branch/diff and the handoff without repeating the repository audit or overwriting local work.
-2. Complete the pending independent review of the runner/UI and whole branch; fix any confirmed findings with regression checks. Initial intake review was completed, but later independent review was interrupted by the sub-agent usage limit. Do not report that review as passed.
-3. Resolve the outstanding portions of R1-001/002 against their acceptance criteria, then implement **R1-003: film-specific durable state/contracts**, followed by R1-004 credit/attempt controls. Software work can proceed without a Google login; live provider work cannot.
+2. Read November8 final native-audio results:178 tests/build/four browser checks and independent reviews passed. Do not repeat completed reviews or implementation unless changes/new evidence justify it. Local speech acceptance is not real Flow release acceptance.
+3. Continue image/page, boards/reference and Blender production connections in R1-006/007/008; temporary audio is completed. Verify supported live Flow browser capabilities in R1-009 before provider execution, then downloads/rendering. Audience/final voice/image and Blender tools and authenticated Flow capabilities remain missing; English and the 24-second illustrated robot-gardening pilot are selected.
 4. Respect the user's local review/commit/PR workflow throughout. If the user has merged changes in the meantime, inspect actual Git state before choosing the next feature branch; never assume the recorded base is still current.
 
 ## Remaining Release 1 work
@@ -98,11 +105,11 @@ The order below follows dependencies. Existing supporting pieces are reused rath
 | --- | --- | --- |
 | R1-001 — Flow mapping/contracts | Partial | Finish executable provider/capability/package contracts and acceptance traceability; preserve the existing Flow preset and original diagram. |
 | R1-002 — Brief/skill handoff | Partial | Complete authored-output and downstream-consumption coverage as production stages are connected; finish independent review. Intake, local tool execution and receipts already work. |
-| R1-003 — Durable film state | Not implemented beyond intake | Add versioned film packages, capability snapshots, allowances, attempts and receipts with migrations, project isolation, source pins and interface parity. |
-| R1-004 — Credit/recovery controls | Film implementation pending | Exact package/account/model/settings approval, project credit cap, atomic reservations, attempt/output limits, unknown-outcome reconciliation and crash recovery. Sprite controls are a reference, not a film implementation. |
-| R1-005 — Package/spend review UI | Basic handoff UI exists | Add exact generation package/reference/settings comparison, explicit spending decisions, allowance status and actionable blockers. |
+| R1-003 — Durable film state | Offline package/ledger implemented | Real verified take receipts and downstream adapter integration remain. Additive schema/currentness/isolation/source checks and shared interface evidence are implemented; reported downloaded status is not a verified file. |
+| R1-004 — Credit/recovery controls | Offline implemented and independently reviewed | Live browser click/result/crash recovery and real spending acceptance remain for R1-010/014. Exact package/settings approval, cumulative caps, atomic reservations, unknown reconciliation and no-refund accounting are tested locally. |
+| R1-005 — Package/spend review UI | Implemented and independently reviewed locally | Real provider controls/media and full production acceptance remain. Exact package/reference/settings, separate human decisions, cumulative allowance/cap/attempt status and Refresh/reload tested in isolated browser. |
 | R1-006 — Research/story/comic/script | Helpers exist; production automation pending | Connect sourced trend research and original premise selection; produce real ten-page comic and screenplay artifacts using configured tools and relevant skills, with approvals and provenance. |
-| R1-007 — Audio/boards/references | Existing recorded-audio timing supported | Choose/configure actual audio generation or supplied recordings; produce measured mix/stems/cues, real boards and ordered clean references; preserve overruns and revision invalidation. |
+| R1-007 — Audio/boards/references | Temporary audio connected and reviewed; boards/reference production pending | Native temporary voices or supplied recordings produce real measured mix/stems/SRT/cues under source/lease/revision guards. Choose final voice/audio and connect actual boards/clean-reference creation; real pilot approval remains. |
 | R1-008 — Blender previs | Existing import/review path exists | Connect and verify real Blender execution or explicit supplied `.blend`/preview handoff against approved timing, cameras and character IDs. |
 | R1-009 — Flow capability preflight | Live verification pending | Verify supported visible browser control, direct user login, upload/download, actual model/reference/duration/output support and displayed credit cost; resolve compatibility with the approved film package. |
 | R1-010 — Flow execution | Not implemented for films | Connect the guarded visible-browser runner to reservations, single submission, observation/evidence, safe pause/resume and reconciliation. No hidden API or silent provider substitution. |
@@ -113,9 +120,9 @@ The order below follows dependencies. Existing supporting pieces are reused rath
 
 ## Inputs needed only before dependent work
 
-- First real project's topic, audience, Short/long format, target duration, style and quality requirements.
+- Pilot selected November 6: a 24-second illustrated Short about a robot learning to garden, in English. Audience/voice, detailed creative direction and quality requirements remain. This is one acceptance example, not a permanent niche; no artifact/upload/spending approval is implied.
 - Creator voice/examples or an agreed new voice direction; authorized references and any supplied assets.
-- Selected/available image, audio and Blender tools and any associated permissions or cost limits.
+- Selected/available image and Blender tools, final audio direction/assets and any associated permissions/cost limits. Native Mac/Windows temporary speech and supplied PCM recording paths are already connected; voices are explicitly selected, never silently substituted.
 - Supported visible Flow browser and direct user login, observed model/features and explicit upload/attempt/credit allowance for the exact package.
 - Final output specifications and delivery location.
 

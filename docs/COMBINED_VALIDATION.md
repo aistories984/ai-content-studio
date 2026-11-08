@@ -1,4 +1,51 @@
-# Combined repository validation — November 3, 2026
+# Combined repository validation
+
+## Latest verification — November 8, 2026: native temporary audio
+
+| Check | Result |
+| --- | --- |
+| Full Python suite | 178 PASS, zero failures/skips,23.319sec; `.tools/2026-11-08-native-audio-tests.log` |
+| Frontend production build | TypeScript/Vite PASS |
+| Four isolated browser checks | Dashboard, Flow intake/helpers, film package/spend and actual native audio PASS; `.tools/2026-11-08-native-audio-browsers.log` |
+| Native audio path | Explicit installed voice, blank scene-sized source, real speech/mix/stems/SRT/cues and measured duration; passing output remains in_review |
+| Independent reviews | Native adapter, shared service, UI and final integration PASS; all four recorded findings fixed and re-reviewed |
+| Updated local Studio | HTTP200; voice endpoint200/macOS say/184voices/temporary_only true;28agent tools; restarted after zero-active-job check |
+
+The audio service rechecks screenplay/source/file/direction/scene/lease/target state before rendering and atomically on registration/submission. Agent CLI rendering is synchronous; director HTTP stays asynchronous. Supplied recordings are bound to verified read-only captured copies and recorded original/runtime/import evidence. Alias changes cannot substitute unvalidated audio; rendered-line hashes also detect changed-then-restored copies. Source/lease tokens never become saved job/evidence fields. Overrun speech remains intact and unapproved. Flow versions exclude the standalone legacy Wan plan; old Wan/standalone behavior is preserved.
+
+Tests include20speech and26audio-service cases plus the existing132 baseline. Mac native speech was exercised directly and through the actual browser/HTTP pipeline, using only disposable technical fixtures. Windows System.Speech boundaries are mocked; actual Windows runtime was not available. Image/page/board/Blender production, final audio casting, real Flow execution/original downloads/final film rendering and real-video acceptance remain unfinished. No paid request, Google account operation, cloud upload or final creative approval occurred.
+
+Review report: `.tools/2026-11-06-native-audio-integration-review.md` (November8 fix-wave signoff); adapter report `.tools/2026-11-06-native-audio-task1-review.md`. Screenshots: `.tools/audio-form-{desktop,mobile}.png` and `.tools/audio-{desktop,mobile}.png`; mobile form inspected. Prior dated results below remain historical.
+
+## Latest verification — November 6, 2026
+
+Offline film packages and credit controls are implemented locally and independently reviewed; full video automation remains unfinished.
+
+| Check | Result |
+| --- | --- |
+| Full Python suite | 132 PASS, zero failures/skips, 16.715sec; `.tools/2026-11-06-final-tests.log` |
+| Frontend production build | TypeScript/Vite PASS after final scope-copy correction |
+| Existing dashboard browser | `scripts/check_dashboard.cjs` PASS on final stable build |
+| Flow intake/helper/direction browser | `scripts/check_production.cjs` PASS; immutable intake preserved, credit cap save works |
+| Film package/spend browser | `scripts/check_film.cjs` PASS: exact prompt/ref review, separate package/allowance decisions, conservative unknown commitment, Refresh/reload, desktop/mobile, no Generate/page errors |
+| Independent reviews | Foundation, financial service, integration/re-review and whole-branch PASS; no outstanding findings |
+| Live Studio | HTTP200 at127.0.0.1:8767; three workflows/new film state route verified, no test records seeded |
+
+New service covers immutable observations/packages/decisions/allowances/attempts/results, current approved source/file/lease checks, atomic project/account reservations, cumulative scene/project ceilings across revisions, observed-cost overruns without assumed refunds and fresh-lease reconciliation. Five new agent-safe operations bring total CLI/MCP tools to26; human approvals and caps remain outside agent TOOLS. ZIP exports retain safe `film-production.json` history.
+
+Tests/reviews found and fixed Flow direction-save rejection, stale film state after dashboard Refresh and ignored conflicting HTTP envelope identity fields. Source-integrity cross-component probe confirms an upstream helper receipt is pinned into the film package; tampering invalidates handoff/package and blocks reservation with zero commitment. A failed browser repeat during a concurrent rebuild was repeated successfully against the stable build; usage-limit interruption was resolved on user resume. Do not substitute old failure/pending status for final results above.
+
+All test projects use temporary data; fake observed account/model values and placeholder Blender bytes are technical fixtures. No real Flow login/generation, credits, upload, original download, actual Blender production or final render were verified. A reported downloaded state explicitly sets local verification false. Production asset/browser/download/render adapters and real-video acceptance remain unfinished. English24-second illustrated robot-gardening pilot is selected; audience/voice/production tools and actual creative/spend approvals remain open.
+
+Repeat film browser check with ffmpeg/ffprobe on PATH and the existing local browser dependencies:
+
+```bash
+PLAYWRIGHT_BROWSERS_PATH="$PWD/.tools/browsers" node scripts/check_film.cjs
+```
+
+Reports/screenshots/logs remain ignored under `.tools/`; execution ledger is under `.superpowers/sdd/2026-11-06-flow-film-state-and-credit-controls/`. No agent Git publication. Historical results below describe earlier milestones.
+
+## Original foundation verification — November 3
 
 ## What was checked
 

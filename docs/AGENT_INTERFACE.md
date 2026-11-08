@@ -2,6 +2,12 @@
 
 Any agent with local shell access can use the CLI. MCP clients can use the same typed tools. Both enforce the same gates and use the same SQLite project records as the dashboard.
 
+Flow film package/accounting operations and their HTTP equivalents are documented in [Flow film usage](FLOW_FILM_WORKFLOW.md). There are now28 shared agent operations; human package/spend decisions remain dashboard-only. A reservation or result observation never clicks Generate or verifies an original download.
+
+Native temporary audio adds `get_speech_capabilities()` and synchronous `render_scratch_audio(project_id,scene_id,source,task_id,token)`. Select an installed voice explicitly; claim the matching ready audio scene after the screenplay is approved. The renderer revalidates source versions/files, direction, scene and target version around rendering and inside registration/submission transactions. It retains mix/stems/lines, cues, SRT, source/timing/evidence and measured engine metadata. Passing timing submits for human review, never approves or finishes the task. Overruns preserve all speech and return needs_changes. An explicit absolute PCM recording may be supplied to this leased agent operation; HTTP director generation rejects local recording paths and remains an asynchronous job. Request sources and logs must not contain lease tokens.
+
+GET `/api/audio-voices` returns platform/engine, installed `{id,name,language}` voices, availability/issues and `temporary_only:true`. POST `/api/projects/{project}/audio` retains `{scene_id,source}` and queued job response under director-session protection. CLI agent rendering is synchronous so work is not abandoned when a short-lived CLI process exits. Native speech has no cloud or credit operation and is separate from final voice acceptance.
+
 ## CLI
 
 On macOS/Linux use `.venv/bin/python` instead of the Windows interpreter path below. For example, `.venv/bin/python -m studio.cli list_projects`. All clients must share the same `DIRECTOR_DATA`. YouTube skill selection and supporting-artifact handoffs are documented in [the combined playbook](youtube/WORKFLOW.md).
