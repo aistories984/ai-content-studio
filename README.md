@@ -6,7 +6,9 @@ This repository combines Director Studio with 11 YouTube skills under `.agents/s
 
 Read [WORK_LOG.md](WORK_LOG.md) first for the goal and handoff. See [the integration design](docs/superpowers/specs/2026-11-02-unified-foundation-design.md) and [YouTube capabilities](REPO_OVERVIEW.md).
 
-Use [PROJECT_STATUS.md](PROJECT_STATUS.md) for the project chart, Done/In progress/Pending checklist, required inputs and next work.
+Use [leftoverwork.md](leftoverwork.md) for the simple daily nine-item checklist and today's focus. [PROJECT_STATUS.md](PROJECT_STATUS.md) retains the detailed software chart and required inputs. Update progress after every session; one item at a time.
+
+**Research → ideas:** open the sidebar workspace to save a research question and inspect sourced suggestions. Ask the active agent session to collect public evidence and save its report; then choose an idea and enter audience/style to start its Google Flow project. Exact research and helper results stay attached to the project and export. See the [research guide](docs/youtube/RESEARCH.md). Saving a request does not start background monitoring or approve production.
 
 Next product milestone: [SDLC agenda and four-role team](docs/sdlc/README.md), [14-ticket backlog](docs/sdlc/02-PO-BACKLOG.md), and [R1 Flow video design](docs/superpowers/specs/2026-11-03-flow-video-r1-design.md). R1 targets actual reviewed/downloaded Flow video and final delivery with manual upload; multi-account social publishing is later scope. These planning documents do not indicate that the missing automation is implemented.
 

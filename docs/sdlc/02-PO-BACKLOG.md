@@ -93,10 +93,11 @@ Trace: BA-F07/F10, BA-A01/05; SDET R1-06/09, G2. Evidence: browser/review tests;
 
 ### R1-006 — Produce research, premise, comic and screenplay handoffs
 
-**P1 · Draft/design-review · Owner: Developer; human creative director · Depends: R1-002/003/005**
+**P1 · In progress: Research → ideas implemented/verified November 8; premise/comic/screenplay production remains · Owner: Developer; human creative director · Depends: R1-002/003/005**
 
 Story: As director, I select an original researched premise and review real visual/story artifacts.
 
+- [x] Active-session sourced research, immutable dated reports, actual channel-relative helper output, original ideas and exact human selection → production brief/handoff/export.192tests/build/five browser flows and independent reviews PASS. No background monitoring or premise approval implied; see `docs/youtube/RESEARCH.md`.
 - [ ] Configure or accept explicit supplied image/page tools; absent tooling/allowance blocks media production instead of generating placeholder completion.
 - [ ] Relevant `yt-viral` work retains dated sources and channel-relative evidence; `yt-script` uses supplied creator context and required hook tools. Preserve selections and real tool outputs.
 - [ ] Runner/import path registers actual readable ten-page comic with stable identities and a distinct full screenplay/shot/package plan; text notes do not satisfy comic completion.

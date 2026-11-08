@@ -43,6 +43,7 @@ import {
 } from "lucide-react";
 import "./styles.css";
 import { FilmPanel } from "./FilmPanel";
+import { ResearchPanel, ResearchReport } from "./ResearchPanel";
 
 type Json = Record<string, any>;
 type MediaFile = {
@@ -492,6 +493,7 @@ function App() {
         <nav>
           {[
             { name: "Projects", icon: LayoutGrid },
+            { name: "Research → ideas", icon: Search },
             { name: "Review queue", icon: ListChecks },
             { name: "Asset library", icon: Images },
             { name: "Activity", icon: Activity },
@@ -600,7 +602,9 @@ function App() {
               </button>
             </div>
           )}
-          {loading && !project ? (
+          {nav === "Research → ideas" ? (
+            <ResearchPanel api={api} onOpen={async (id) => { await refresh(id); await openProject(id); }} />
+          ) : loading && !project ? (
             <Empty icon={LoaderCircle} title="Opening your workspace…" />
           ) : (
             <>
@@ -3999,12 +4003,21 @@ function ProductionHandoff({
             A recorded tool output does not approve the story or complete a
             production stage.
           </p>
+          {handoff.research && <div className="research-panel research-handoff">
+            <h4>Saved research</h4>
+            <p>{handoff.research.request.query} → {handoff.research.idea.title} · {handoff.research.is_current ? "Current helper and skill sources" : "Historical helper or skill sources"}</p>
+            <p>Exact selected report: <a href={`/api/research/${handoff.research.request.id}`} target="_blank" rel="noreferrer">{handoff.research.report.id}</a> · idea {handoff.research.idea.id}</p>
+            <ResearchReport report={handoff.research.report} />
+          </div>}
           {handoff.evidence.length > 0 && (
             <div className="production-evidence">
               <h4>Saved tool outputs</h4>
               <ul>
                 {handoff.evidence.map((e: Json) => (
-                  <li key={e.version_id}>
+                  e.source === "research" ? <li key={e.report_id}>
+                    <strong>{e.tool_name}</strong> · {e.is_current ? "Current" : "Historical"} · {e.evidence_status === "ranked" ? "Ranked sample outliers" : "Unranked research output"}
+                    <a href={`/api/research/${e.research_id}`} target="_blank" rel="noreferrer">Saved research report</a>
+                  </li> : <li key={e.version_id}>
                     <strong>{e.tool_name}</strong> ·{" "}
                     {e.is_current ? "Current" : "Historical"} ·{" "}
                     {e.status.replaceAll("_", " ")}

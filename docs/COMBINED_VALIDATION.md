@@ -1,5 +1,24 @@
 # Combined repository validation
 
+## Research → ideas verification — November 8, 2026
+
+| Check | Result |
+| --- | --- |
+| Full Python suite | 192 PASS, zero failures/skips, 25.531 sec; `.tools/2026-11-08-research-final-tests.log` |
+| Production build | TypeScript/Vite PASS; root final build and UI ordering-fix build logs retained |
+| Five isolated browser flows | Research, dashboard, Flow intake/helpers, film package/spend and actual native audio PASS; `.tools/2026-11-08-research-ui-{green,dashboard,production,film,audio}.log` |
+| Review regression | Delayed pre-save GET hiding a saved report/request reproduced RED; epoch/loading fix and full Research browser GREEN; `.tools/2026-11-08-research-ui-ordering-{red,green,build}.log` |
+| Scoped independent reviews | Backend PASS; UI PASS after same-reviewer ordering-fix signoff |
+| Final integration review | PASS after scoped optional-voice fix signoff; `.superpowers/sdd/2026-11-08-research-to-ideas/final-review.md`; no open Important/Critical findings |
+| Live public observation | Five dated secondary-listed Shorts, actual helper output and two original ideas saved/reopened; `.tools/2026-11-08-live-research/` |
+| Running Studio | Restarted after zero-active-job check, preserving two projects and no seeding; HTTP200,32agent operations, one saved example/two ideas/no selection |
+
+The real browser flow begins with zero projects, persists a broad research request, saves an actual helper report through the shared agent operation, inspects source links/metrics, selects an exact idea with audience/style, opens the correct Google Flow project and verifies all twelve named obligations remain unapproved. Exact retries reuse one project. Research and ordinary artifact receipts render together. Reload, old/new reports, unknown views, request switching and delayed responses retain the correct evidence. Screenshots `.tools/research-{desktop,mobile,project-desktop}.png` and `.tools/research-live-{desktop,mobile}.png` are retained; root inspected live desktop and technical mobile layouts.
+
+Both final UI fixes (response ordering and omission of blank optional creator voice) changed UI only; the full Research browser and production build were rerun after each. Blank and populated voice selection plus exact retries pass. The backend remained unchanged from the recorded192-test run. Tests use disposable data, not the user's production projects. The live example is explicitly a technical integration example using [a public secondary listing](https://trari.com/en/c/epicgardening/), captured November8 at17:48:57UTC. Direct YouTube pages were unreadable; counts are not independently verified, age-adjusted or a full-channel baseline. The saved example created no production project/selection/approval. No Google login, paid generation, upload or finished-video acceptance occurred.
+
+This verifies the selected active-session coordination path. The dashboard does not run a background researcher or independently measure views. Research/selection is separate from authoring and approving the premise/comic/screenplay. Image/boards/Blender, Flow film execution/downloads, final rendering and real-video acceptance remain unfinished.
+
 ## Latest verification — November 8, 2026: native temporary audio
 
 | Check | Result |

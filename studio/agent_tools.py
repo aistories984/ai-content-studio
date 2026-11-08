@@ -202,4 +202,28 @@ def extract_sprites(project_id: str, scene_id: str, source_version_id: str, sett
     return database().pack_sprite_artifact(project_id, scene_id, source_version_id, settings, task_id, token)
 
 
-TOOLS = {fn.__name__: fn for fn in (list_projects, get_project, get_next_action, claim_task, heartbeat, register_artifact, validate_artifact, submit_for_review, finish_task, save_scene, get_workflow, list_workflows, get_artifact, prepare_generation, export_project, reserve_flow_attempt, record_flow_result, extract_sprites, create_production_project, get_production_handoff, run_youtube_tool, get_film_state, record_film_capability, prepare_film_package, reserve_film_attempt, record_film_result, get_speech_capabilities, render_scratch_audio)}
+def create_research_request(payload: dict) -> dict:
+    """Save an active-session public research request before any project exists."""
+    from .research import ResearchService
+    return ResearchService(database()).create_request(payload)
+
+
+def list_research_requests() -> list[dict]:
+    """Read pending and completed research with retained source evidence."""
+    from .research import ResearchService
+    return ResearchService(database()).list_requests()
+
+
+def get_research_request(research_id: str) -> dict:
+    """Read exact immutable reports, actual swipe results and selections."""
+    from .research import ResearchService
+    return ResearchService(database()).get_request(research_id)
+
+
+def save_research_report(research_id: str, payload: dict) -> dict:
+    """Validate public observations/ideas and run fixed swipe.py; never select or approve."""
+    from .research import ResearchService
+    return ResearchService(database()).save_report(research_id, payload)
+
+
+TOOLS = {fn.__name__: fn for fn in (create_research_request, list_research_requests, get_research_request, save_research_report, list_projects, get_project, get_next_action, claim_task, heartbeat, register_artifact, validate_artifact, submit_for_review, finish_task, save_scene, get_workflow, list_workflows, get_artifact, prepare_generation, export_project, reserve_flow_attempt, record_flow_result, extract_sprites, create_production_project, get_production_handoff, run_youtube_tool, get_film_state, record_film_capability, prepare_film_package, reserve_film_attempt, record_film_result, get_speech_capabilities, render_scratch_audio)}

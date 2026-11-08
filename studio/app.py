@@ -68,6 +68,54 @@ def session():
     return {"token": DIRECTOR_TOKEN, "workflow": WORKFLOW, "workflows": list(WORKFLOWS.values()), "local_only": True, "version": "0.2.0", "provider": {"name": "Alibaba Cloud Model Studio", "model": "wan3.0-video", "mode": "package_export", "paid_submission_enabled": False}, "sprite_provider": {"name": "Google Flow", "model": "Gemini Omni Flash 1.1", "mode": "browser_ui", "api_enabled": False}}
 
 
+async def research_body(request: Request):
+    from .research import MAX_JSON
+    raw = bytearray()
+    async for chunk in request.stream():
+        if len(raw) + len(chunk) > MAX_JSON:
+            raise Problem("Research JSON must be at most 1 MB.")
+        raw.extend(chunk)
+    value = production.load_finite_json(bytes(raw))
+    if not isinstance(value, dict):
+        raise Problem("Research body must be an object.")
+    return value
+
+
+@app.get("/api/research")
+def list_research():
+    from .research import ResearchService
+    return ResearchService(store).list_requests()
+
+
+@app.post("/api/research")
+async def create_research(request: Request):
+    from .research import ResearchService
+    return await asyncio.to_thread(ResearchService(store).create_request, await research_body(request))
+
+
+@app.get("/api/research/{research_id}")
+def get_research(research_id: str):
+    from .research import ResearchService
+    return ResearchService(store).get_request(research_id)
+
+
+@app.post("/api/research/{research_id}/reports")
+async def save_research(research_id: str, request: Request):
+    from .research import ResearchService
+    return await asyncio.to_thread(ResearchService(store).save_report, research_id, await research_body(request))
+
+
+@app.post("/api/research/{research_id}/select")
+async def select_research(research_id: str, request: Request):
+    from .research import ResearchService, fields
+    body = await research_body(request)
+    fields(body, {"report_id", "idea_id", "payload"}, {"report_id", "idea_id", "payload"})
+    from .store import text
+    report_id = text(body["report_id"], "Report ID", 100, True)
+    idea_id = text(body["idea_id"], "Idea ID", 100, True)
+    return await asyncio.to_thread(ResearchService(store).select_idea, research_id, report_id, idea_id, body["payload"])
+
+
 @app.get("/api/projects")
 def projects():
     return store.list_projects()

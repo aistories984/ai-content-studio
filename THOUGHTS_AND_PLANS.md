@@ -20,6 +20,14 @@ The intended product is a unified agent framework for video production, automati
 
 ## Ideas and daily notes
 
+### November 8, 2026 — One item per day, simple visible progress
+
+User explicitly reaffirmed: use both `leftoverwork.md` and `PROJECT_STATUS.md`, and finish Research → ideas now. This authorizes reversible implementation/verification within the already selected active-session R1 approach; it does not select a production idea, approve creative output or permit paid generation/Git publication.
+
+Implementation follows that selected active-session boundary: public research is collected by the active agent, retained in immutable reports with actual ranking outputs, and presented for human idea selection into a production brief. A small gardening example is explicitly an integration example, not the user's final niche/idea decision. Continuous monitoring remains later work.
+
+User wants `leftoverwork.md` to show the nine remaining items with clear statuses. Work on one item at a time, starting with Research → ideas, and update the file after every work session. Record what actually finished, checks/evidence, what is missing and the next action. Only mark Done after implementation and verification. The target is to finish the research connection before moving to the next item; today's checklist update does not claim it is built. Keep the outer and canonical copies aligned when both exist.
+
 ### November 6, 2026 — First real-video acceptance example selected
 
 User selected a 24-second illustrated Short about a robot learning to garden for the eventual real-video acceptance test, then specified English. This is a single pilot, not a permanent niche/channel restriction. Audience/voice, selected image/audio/Blender tools/assets and detailed story/shot choices remain to be established and reviewed. This selection does not approve any creative artifact, asset upload, paid generation, model/settings or credit allowance.

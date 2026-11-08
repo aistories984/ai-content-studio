@@ -4095,3 +4095,26 @@ input[type="file"]::file-selector-button {
 .film-references, .film-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .film-references figure { margin: 0; width: 160px; max-width: 100%; }
 .film-references img { width: 100%; max-height: 160px; object-fit: contain; }
+
+.research-panel { display: grid; gap: 18px; min-width: 0; }
+.research-panel .panel { padding: 20px; }
+.research-panel p, .research-panel li, .research-panel code { overflow-wrap: anywhere; }
+.research-panel a { color: var(--teal); text-decoration: underline; }
+.research-layout { display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); gap: 18px; align-items: start; }
+.research-sidebar, .research-detail, .research-report, .research-intro { display: grid; gap: 14px; min-width: 0; }
+.research-panel form, .research-panel label { display: grid; gap: 8px; min-width: 0; }
+.research-panel form { gap: 14px; }
+.research-panel input, .research-panel textarea, .research-panel select { width: 100%; min-width: 0; max-width: 100%; border: 1px solid var(--line); border-radius: 7px; padding: 10px; background: white; }
+.research-panel textarea { resize: vertical; }
+.research-panel summary { cursor: pointer; padding: 10px 0; font-weight: 650; }
+.research-panel pre { max-height: 360px; white-space: pre-wrap; overflow: auto; overflow-wrap: anywhere; font-size: 12px; }
+.research-panel ul, .research-panel ol { margin: 0; padding-left: 22px; }
+.research-history { list-style: none; padding: 0 !important; display: grid; gap: 12px; }
+.research-history button { width: 100%; text-align: left; padding: 10px; border-radius: 7px; border: 1px solid var(--line); overflow-wrap: anywhere; }
+.research-history button.active { color: var(--teal); background: #edf7f2; border-color: var(--teal); }
+.research-history small { display: block; padding-top: 5px; overflow-wrap: anywhere; }
+.research-sources { display: grid; gap: 10px; }
+.research-sources article, .research-idea { padding: 14px; border: 1px solid var(--line); border-radius: 9px; display: grid; gap: 8px; min-width: 0; }
+.research-note { background: #fff6df; padding: 10px; border-radius: 7px; }
+.research-handoff { padding: 14px; border: 1px solid var(--line); border-radius: 9px; margin: 12px 0; }
+@media (max-width: 900px) { .research-layout { grid-template-columns: 1fr; } }

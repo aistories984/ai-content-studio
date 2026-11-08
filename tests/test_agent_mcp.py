@@ -25,7 +25,7 @@ class McpIntegrationTests(unittest.IsolatedAsyncioTestCase):
                                             "get_workflow", "list_workflows", "get_artifact", "prepare_generation", "export_project",
                                             "reserve_flow_attempt", "record_flow_result", "extract_sprites", "create_production_project",
                                             "get_production_handoff", "run_youtube_tool", "get_film_state", "record_film_capability",
-                                            "prepare_film_package", "reserve_film_attempt", "record_film_result", "get_speech_capabilities", "render_scratch_audio"})
+                                            "prepare_film_package", "reserve_film_attempt", "record_film_result", "get_speech_capabilities", "render_scratch_audio", "create_research_request", "list_research_requests", "get_research_request", "save_research_report"})
                     self.assertFalse(any("approv" in name or "review" in name and name != "submit_for_review" for name in names))
 
                     async def call(name, arguments):
@@ -36,7 +36,17 @@ class McpIntegrationTests(unittest.IsolatedAsyncioTestCase):
                     capabilities = await call("get_speech_capabilities", {})
                     self.assertEqual(set(capabilities), {"platform", "engine", "available", "voices", "issues", "temporary_only"})
                     self.assertTrue(capabilities["temporary_only"])
-                    self.assertEqual(len(names), 28)
+                    self.assertEqual(len(names), 32)
+
+                    from tests.test_research import REQUEST, report_payload
+                    research = await call("create_research_request", {"payload": REQUEST})
+                    report = await call("save_research_report", {"research_id": research["id"], "payload": report_payload()})
+                    restored = await call("get_research_request", {"research_id": research["id"]})
+                    self.assertEqual(restored, report)
+                    listing = await session.call_tool("list_research_requests", {})
+                    self.assertFalse(listing.isError, listing.content)
+                    self.assertEqual(listing.structuredContent["result"][0]["id"], research["id"])
+                    self.assertFalse(any("select" in name for name in names))
 
                     action = await call("get_next_action", {"project_id": project})
                     self.assertEqual(action["stage"], "premise")

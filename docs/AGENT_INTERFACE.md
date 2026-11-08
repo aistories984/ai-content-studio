@@ -2,7 +2,24 @@
 
 Any agent with local shell access can use the CLI. MCP clients can use the same typed tools. Both enforce the same gates and use the same SQLite project records as the dashboard.
 
-Flow film package/accounting operations and their HTTP equivalents are documented in [Flow film usage](FLOW_FILM_WORKFLOW.md). There are now28 shared agent operations; human package/spend decisions remain dashboard-only. A reservation or result observation never clicks Generate or verifies an original download.
+Flow film package/accounting operations and their HTTP equivalents are documented in [Flow film usage](FLOW_FILM_WORKFLOW.md). There are now32 shared agent operations; human idea selection and package/spend decisions remain dashboard-only. A reservation or result observation never clicks Generate or verifies an original download.
+
+## Research before project creation
+
+The [Research → ideas operator guide](youtube/RESEARCH.md) describes public-source collection, report JSON and the human selection boundary. These four shared CLI/MCP operations use the same database as the dashboard, without needing a project or production lease:
+
+| Tool | Arguments and result |
+| --- | --- |
+| `create_research_request` | `payload:{query,categories:[],language,time_window}` → durable pending request |
+| `list_research_requests` | No arguments → full requests newest first |
+| `get_research_request` | `research_id` → request, reports newest first, selections |
+| `save_research_report` | `research_id,payload` → updated request with immutable validated report and actual swipe helper output |
+
+CLI example: `.venv/bin/python -m studio.cli save_research_report --json-file .tools/research-report-request.json`, whose file contains `{"research_id":"research_REPLACE","payload":{...}}`. All clients must share `DIRECTOR_DATA`. The active agent session uses its available public web tools; the service does not fetch sources, scrape, launch background research or independently measure views.
+
+HTTP equivalents: GET/POST `/api/research`, GET `/api/research/{id}`, POST `/api/research/{id}/reports`. Writes retain director-session protection. POST `/api/research/{id}/select` is director-only and requires `{report_id,idea_id,payload:{audience,style,creator_voice?}}`; there is no agent selection operation. Optional explicit `topic`, `format`, `target_seconds` adjustments are accepted in this payload and retained. Human selection atomically creates or reopens the same Flow project and immutable source link; it does not approve stages, spend or publish.
+
+`get_production_handoff` includes `research:{request,report,idea,selection,is_current}` or `null`. `evidence` contains both existing artifact receipts (`version_id,status,receipt`) and research outputs (`source:"research",research_id,report_id,report_sha256,idea_id,evidence_status,result,is_current`). Research entries have no artifact receipt. Treat unranked results as unranked even when a helper output exists; changed tool/skill sources remain historical and block new selection. Project export preserves the exact pin in `research.json`.
 
 Native temporary audio adds `get_speech_capabilities()` and synchronous `render_scratch_audio(project_id,scene_id,source,task_id,token)`. Select an installed voice explicitly; claim the matching ready audio scene after the screenplay is approved. The renderer revalidates source versions/files, direction, scene and target version around rendering and inside registration/submission transactions. It retains mix/stems/lines, cues, SRT, source/timing/evidence and measured engine metadata. Passing timing submits for human review, never approves or finishes the task. Overruns preserve all speech and return needs_changes. An explicit absolute PCM recording may be supplied to this leased agent operation; HTTP director generation rejects local recording paths and remains an asynchronous job. Request sources and logs must not contain lease tokens.
 

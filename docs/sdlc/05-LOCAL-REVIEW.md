@@ -1,5 +1,14 @@
 # Local review: Flow intake and YouTube skill execution
 
+## November 8, 2026 — Research → ideas ready for local review
+
+The active-session research-to-project connection is complete. Research sidebar works before projects exist; saved sources, observed metrics/limitations, actual helper outputs and original ideas survive reload. Human selection creates a validated Flow brief with exact research retained in the handoff/export; no creative or spending approval occurs.
+
+Verification: 192 Python tests passed with no skips; build and all five isolated browser flows passed. Backend/UI/final independent reviews passed after two real browser regressions were fixed: stale refresh overwriting a saved record, and blank optional voice causing a validation error. Final build/full Research browser passed blank and populated voice, retries, history, mixed receipts and all twelve unapproved obligations. See the latest [combined validation](../COMBINED_VALIDATION.md) and [usage guide](../youtube/RESEARCH.md).
+
+Both [project status](../../PROJECT_STATUS.md) and [daily checklist](../../leftoverwork.md) mark item 1 Done. Item 2, actual premise/comic/screenplay production, is next and still pending. Full video production, Flow browser execution and real-video acceptance remain unfinished. No staging, commit, push, PR or merge performed; user owns Git review/publication.
+
+
 ## November 8 update — usable native temporary dialogue
 
 - Native Mac speech and supplied PCM recording paths are connected to the shared guarded service and explicit voice/scene UI. Windows native interface is retained with mocked boundary coverage; this Mac did not verify actual Windows execution.

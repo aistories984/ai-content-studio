@@ -24,6 +24,8 @@ Many writing skills require `~/.codex/youtube/voice.md`. Fill `templates/youtube
 
 ## Flow film intake and local execution
 
+Research can now precede project creation through the [Research → ideas workspace](RESEARCH.md). An active agent collects public observations, then `create_research_request`, `list_research_requests`, `get_research_request` and `save_research_report` persist requests, dated sources, actual swipe results and original ideas. The director selects an exact idea/report with audience and style in the dashboard. This atomically creates the Flow brief, preserving the research in production handoff/export and leaving all creative/spending gates unapproved. The shared interface now has 32 operations; agents have no idea-selection operation. The dashboard stores research; it does not run a background researcher or independently measure views.
+
 The dashboard's New project form defaults to Google Flow film. Enter a topic, audience, visual style, Short/long format, and target seconds. This creates a `comic-to-flow` project that preserves the required film stages. Existing Wan film and sprite projects remain available explicitly.
 
 The Production handoff panel shows the eligible stage, selected skills, the full eleven-skill catalog with deferral reasons, and current/historical output receipts. A tool output does not complete a creative stage. Flow film generation intentionally reports an unimplemented-adapter error rather than falling back to Wan.

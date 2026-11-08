@@ -203,6 +203,15 @@ def get_handoff(store: Store, project_id: str, scene_id: str | None = None) -> d
                      ["Human creative review at every required stage", "Exact package and spending allowance before any generation"])]
     skills.extend(dict(entry) for entry in catalog if entry["applicability"] == "applicable")
     evidence, blockers = _evidence(store, project, scene_id)
+    from .research import ResearchService
+    research = ResearchService(store).project_research(project_id)
+    if research:
+        report = research["report"]
+        evidence.append({"skill_name": "yt-viral", "tool_name": "swipe", "research_id": research["request"]["id"], "report_id": report["id"], "report_sha256": report["sha256"], "idea_id": research["idea"]["id"], "is_current": research["is_current"], "evidence_status": report["evidence"]["status"], "execution_status": "succeeded", "source": "research", "result": report["tool_execution"]["result"]})
+        if not research["is_current"]:
+            blockers.append("Pinned research helper/skill sources changed; research evidence needs updating.")
+        if report["evidence"]["status"] == "unranked":
+            blockers.append("Pinned research is unranked; review limitations and missing comparative evidence.")
     for selected in skills:
         if any(item["skill_name"] == selected["name"] and item["is_current"] for item in evidence):
             selected["status"] = "has_evidence"
@@ -216,5 +225,5 @@ def get_handoff(store: Store, project_id: str, scene_id: str | None = None) -> d
     if next_action["state"] == "awaiting_review":
         blockers.append("The exact submitted version is awaiting human review; do not advance the stage.")
     return {"project_id": project_id, "workflow_id": FLOW_WORKFLOW, "brief": brief,
-            "next_action": next_action, "skills": skills, "catalog": catalog, "evidence": evidence,
+            "research": research, "next_action": next_action, "skills": skills, "catalog": catalog, "evidence": evidence,
             "blockers": blockers, "automation": {"browser_ready": False, "generation_ready": False, "render_ready": False, "publish_ready": False}}

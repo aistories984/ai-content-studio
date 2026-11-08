@@ -98,6 +98,8 @@ class Store:
 
             from .film import initialize_schema
             initialize_schema(db)
+            from .research import initialize_schema as initialize_research
+            initialize_research(db)
 
     @contextmanager
     def db(self, write=False):
@@ -126,6 +128,12 @@ class Store:
         db.execute("INSERT INTO events(project_id,kind,message,actor,created) VALUES(?,?,?,?,?)", (project, kind, message, actor, now()))
 
     def create_project(self, payload):
+        with self.db(True) as db:
+            key = self._create_project(db, payload)
+        return self.project(key)
+
+    def _create_project(self, db, payload):
+        """Validate/create within a caller-owned transaction; return only the ID."""
         title = text(payload.get("title", ""), "Project title", 120, True)
         brief = text(payload.get("brief", ""), "Brief")
         selected = payload.get("workflow_id", WORKFLOW["id"])
@@ -155,10 +163,9 @@ class Store:
         if selected == "sprite-to-flow" and settings["aspect_ratio"] == "1:1":
             raise Problem("Flow Omni source clips use landscape or portrait; sprite cells may still be square.")
         key = ident("project")
-        with self.db(True) as db:
-            db.execute("INSERT INTO projects(id,title,brief,settings,created) VALUES(?,?,?,?,?)", (key, title, brief, encode(settings), now()))
-            self.event(db, key, "project", f"Created {title}")
-        return self.project(key)
+        db.execute("INSERT INTO projects(id,title,brief,settings,created) VALUES(?,?,?,?,?)", (key, title, brief, encode(settings), now()))
+        self.event(db, key, "project", f"Created {title}")
+        return key
 
     def list_projects(self):
         with self.db() as db:
@@ -938,6 +945,8 @@ class Store:
             if p["workflow_id"] == "comic-to-flow":
                 from .film import FilmService
                 archive.writestr("film-production.json", encode(FilmService(self).get_state(project)))
+                from .research import ResearchService
+                archive.writestr("research.json", encode(ResearchService(self).project_research(project)))
             archive.writestr("README.txt", "Director Studio project export. project.json includes version hashes, prompts, reviews and dependency IDs. Files under assets/ are immutable sources. timeline.json records editable in/out points. Secrets and API credentials are not included.\n")
             included = set()
             for a in p["artifacts"]:

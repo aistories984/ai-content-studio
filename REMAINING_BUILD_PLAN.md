@@ -2,13 +2,13 @@
 
 Last updated: November 8, 2026. Read this with the **Current handoff** in `WORK_LOG.md` to resume. Detailed ticket requirements remain in `docs/sdlc/02-PO-BACKLOG.md`.
 
-User-facing chart/checklist: [PROJECT_STATUS.md](PROJECT_STATUS.md). Keep its specific completion statuses synchronized with this detailed plan after meaningful work.
+Use both the [simple daily checklist](leftoverwork.md) and [detailed project status](PROJECT_STATUS.md). **Item 1, Research → ideas, is Done for active-session use. Next item 2, Comic and screenplay, is Pending.** Work on one numbered item at a time and update both files at session end. No real-video or unattended-monitoring completion is implied.
 
 ## Goal and operating rules
 
 Combine Director Studio and the YouTube skills into a working brief-to-video system following the full supplied film diagram. Use Google Flow for video generation. Release 1 ends with real downloaded takes, an accepted final video and a portable delivery bundle; the user uploads manually. Multi-account publishing is a later release. Growth and revenue are measured goals, not guaranteed outcomes.
 
-- Current branch: `feature/flow-video-automation`, based on master `2cf5f5e`. At this status review, local HEAD is `ef26697`, following `345b492` and `b03143f`; the tree was clean before this documentation update. Remote publication was previously verified at `b03143f`; newer remote/PR/merge state was not checked. Inspect actual Git state on resume.
+- Current branch: `feature/flow-video-automation`, based on master `2cf5f5e`. Latest November 8 checklist inspection: user HEAD `b731fc8` (New Update), clean before this session's documentation edits. Remote/PR/merge state not checked. Inspect actual Git state on resume.
 - Do not stage, commit, push, create a PR, merge, discard, or overwrite the user's work. User owns Git review/publication unless they explicitly authorize a particular action later.
 - Continue with active-session agents and durable saved state. An unattended worker is not implemented.
 - Preserve all twelve diagram obligations and human creative/spending gates. Select the relevant YouTube skills and retain actual outputs, receipts and downstream links.
@@ -37,7 +37,7 @@ Combine Director Studio and the YouTube skills into a working brief-to-video sys
 
 **Finish in reviewable milestones:** (1) independent review and remaining contract gaps; (2) durable film package/credit state and review UI; (3) connected research/story/comic/script/audio/boards/Blender production; (4) live Flow preflight, guarded generation and original downloads; (5) final assembly/upload assets; (6) real twelve-obligation SDET pilot. Reuse completed intake/helper/UI work. For each milestone use BA requirements → PO acceptance criteria → Developer changes → SDET evidence, with user-owned Git review. Software work can proceed before login; live compatibility should be checked early enough to avoid designing around unsupported Flow inputs.
 
-**First concrete restart task:** native temporary audio is now connected, independently reviewed and verified alongside the existing intake/helper/package/credit/UI work. November8 final178 tests/build/four browser checks passed. Next select/connect real image/page production and Blender tools (R1-006/007/008) and verify live Flow browser capabilities (R1-009), then generation/download/render and pilot acceptance. English24-second illustrated robot-gardening pilot is selected; audience/final voice/creative artifacts remain unapproved. Do not rebuild completed temporary audio, intake, helpers or credit controls.
+**First concrete restart task:** item 1 is completed and independently reviewed. Continue **item 2, Comic and screenplay**: original premise review, real readable ten-page comic production, approved-comic screenplay adaptation and timed shot packages (remaining R1-006). Resolve image/page tooling and dependent creative inputs. Do not rebuild research, temporary audio, intake, helpers or credit controls. The research plan `docs/superpowers/plans/2026-11-08-research-to-ideas.md` is complete;192tests/build/five browser flows and final review PASS. The selected real-video pilot remains the English24-second illustrated robot-gardening Short; creative/spend approvals remain open. Live Flow/download/render/real-video acceptance remain later checklist items.
 
 ## Golden rule — required SOP and skill evidence
 
@@ -75,6 +75,7 @@ Verification November 3: full Python suite **102 passed, no skips** (`.tools/gol
 
 ## Already implemented — do not rebuild
 
+- [x] Active-session Research → ideas workspace: durable public-source requests/reports, actual swipe outputs/provenance, original suggestions, human selection and immutable research-to-brief/handoff/export pins.32agent operations; no agent selection/approval.192tests/no skips, build, five browser flows and independent reviews PASS; ordering and optional-voice UI findings fixed/rereviewed. A dated secondary-source example is saved without selecting/approving a production project.
 - [x] Consolidated Director Studio, both original skills and eleven YouTube skills, resources and licenses.
 - [x] Installed local runtimes/dependencies and fixed the verified Mac setup and original helper issues.
 - [x] Added `comic-to-flow` film preset, validated per-project Short/long intake and persisted brief.
@@ -94,7 +95,7 @@ Review evidence: `docs/sdlc/05-LOCAL-REVIEW.md` and `docs/COMBINED_VALIDATION.md
 
 1. Inspect the current branch/diff and the handoff without repeating the repository audit or overwriting local work.
 2. Read November8 final native-audio results:178 tests/build/four browser checks and independent reviews passed. Do not repeat completed reviews or implementation unless changes/new evidence justify it. Local speech acceptance is not real Flow release acceptance.
-3. Continue image/page, boards/reference and Blender production connections in R1-006/007/008; temporary audio is completed. Verify supported live Flow browser capabilities in R1-009 before provider execution, then downloads/rendering. Audience/final voice/image and Blender tools and authenticated Flow capabilities remain missing; English and the 24-second illustrated robot-gardening pilot are selected.
+3. Research → ideas is Done. Continue the next checklist item only: premise review, image/page/ten-page comic and screenplay/timed-shot production (remaining R1-006). Read targeted contracts and relevant skills; missing assets/tool access block only dependent work. Boards/Blender/Flow/download/render follow their checklist items; temporary audio is also complete.
 4. Respect the user's local review/commit/PR workflow throughout. If the user has merged changes in the meantime, inspect actual Git state before choosing the next feature branch; never assume the recorded base is still current.
 
 ## Remaining Release 1 work
@@ -104,11 +105,11 @@ The order below follows dependencies. Existing supporting pieces are reused rath
 | Ticket | Current state | What remains |
 | --- | --- | --- |
 | R1-001 — Flow mapping/contracts | Partial | Finish executable provider/capability/package contracts and acceptance traceability; preserve the existing Flow preset and original diagram. |
-| R1-002 — Brief/skill handoff | Partial | Complete authored-output and downstream-consumption coverage as production stages are connected; finish independent review. Intake, local tool execution and receipts already work. |
+| R1-002 — Brief/skill handoff | Partial | Intake, helper receipts and independently reviewed selected-research evidence/brief pins work. Complete authored-output/downstream coverage and review for the remaining creative/media stages. |
 | R1-003 — Durable film state | Offline package/ledger implemented | Real verified take receipts and downstream adapter integration remain. Additive schema/currentness/isolation/source checks and shared interface evidence are implemented; reported downloaded status is not a verified file. |
 | R1-004 — Credit/recovery controls | Offline implemented and independently reviewed | Live browser click/result/crash recovery and real spending acceptance remain for R1-010/014. Exact package/settings approval, cumulative caps, atomic reservations, unknown reconciliation and no-refund accounting are tested locally. |
 | R1-005 — Package/spend review UI | Implemented and independently reviewed locally | Real provider controls/media and full production acceptance remain. Exact package/reference/settings, separate human decisions, cumulative allowance/cap/attempt status and Refresh/reload tested in isolated browser. |
-| R1-006 — Research/story/comic/script | Helpers exist; production automation pending | Connect sourced trend research and original premise selection; produce real ten-page comic and screenplay artifacts using configured tools and relevant skills, with approvals and provenance. |
+| R1-006 — Research/story/comic/script | Research → ideas completed; actual premise/comic/screenplay production pending | Active-session sourced reports, original suggestions and human selection into pinned briefs implemented/verified. Next author/review the actual premise, generate readable ten-page comic and adapt approved comic into screenplay/timed shots with relevant skills/provenance. Research selection is not premise approval. |
 | R1-007 — Audio/boards/references | Temporary audio connected and reviewed; boards/reference production pending | Native temporary voices or supplied recordings produce real measured mix/stems/SRT/cues under source/lease/revision guards. Choose final voice/audio and connect actual boards/clean-reference creation; real pilot approval remains. |
 | R1-008 — Blender previs | Existing import/review path exists | Connect and verify real Blender execution or explicit supplied `.blend`/preview handoff against approved timing, cameras and character IDs. |
 | R1-009 — Flow capability preflight | Live verification pending | Verify supported visible browser control, direct user login, upload/download, actual model/reference/duration/output support and displayed credit cost; resolve compatibility with the approved film package. |

@@ -2,9 +2,11 @@
 
 Last updated: November 8, 2026.
 
+**Daily result:** use both this board and [leftoverwork.md](leftoverwork.md). **1. Research → ideas — Done for the selected active-session workflow.** Sources, actual helper results, original ideas, human selection and exact project handoff/export are implemented and verified. **Next: 2. Comic and screenplay — Pending.** No other numbered item was completed in this session.
+
 **Purpose:** one reusable studio that researches promising ideas, uses the YouTube skills and the full AI Director Studio process to create videos for different channels, and helps us measure audience growth, costs and revenue.
 
-**Current position:** the local foundation, film packages, credit controls, review screens and native temporary-dialogue connection are built. The complete idea → real Google Flow video → final delivery process is unfinished. Release 1 ends with a finished local video and upload materials; you upload manually.
+**Current position:** the local foundation, Research → ideas connection, film packages, credit controls, review screens and native temporary-dialogue connection are built. Research uses the active agent's public web tools; saving a dashboard request does not start background discovery. The complete idea → real Google Flow video → final delivery process is unfinished. Release 1 ends with a finished local video and upload materials; you upload manually.
 
 ## How to read and update this board
 
@@ -26,8 +28,9 @@ After meaningful work, update the affected row, date and next action here, then 
 | B03 | Short/long project brief | Done | Topic, audience, style, format and duration are validated and saved. |
 | B04 | Combined skill selection and handoff | Done | All eleven YouTube skills are considered, with applicable/deferred reasons and current/historical output evidence. |
 | B05 | Six executable YouTube helper tools | Done | Hook, title, edit, chapter, retention and outlier-analysis tools run and save verifiable receipts. |
-| B06 | Shared dashboard / HTTP / CLI / MCP | Done | Implemented features share service rules; 28 agent operations, with no agent approval operation. |
-| B07 | Trend discovery and original premise creation | In progress | Research analysis helper exists; connect public-source discovery and idea outputs to production. Continuous monitoring is later scope. |
+| B06 | Shared dashboard / HTTP / CLI / MCP | Done | Implemented features share service rules; 32 agent operations, with no agent idea-selection or approval operation. |
+| B07 | Research → saved ideas → production brief | Done | Active-session public research, immutable dated reports, actual swipe input/output/resource hashes, original suggestions, human selection, exact brief/handoff/export pins, reload and retries verified. Example with two ideas saved; continuous monitoring stays later scope. |
+| B07a | Full premise authoring and creative approval | Pending | Selected research is a brief, not an approved premise. Author hook/cast/conflict/ending with relevant skills, then obtain the director's exact creative review before the comic. |
 | B08 | Real ten-page comic creation | In progress | Stage, import and review framework exist; actual image/page creation connection remains. |
 | B09 | Full screenplay and shot packages | In progress | Script skill/helper and review stage exist; connect actual approved-comic adaptation and timed shot planning. |
 | B10 | Temporary dialogue, measured audio, tracks and cues | Done | Explicit installed-voice selection, real native Mac speech or supplied agent recordings, measured mix/stems/SRT/cues, guarded source/revision checks and human review are connected and tested. Mac native execution verified; Windows boundary tests mocked. |
@@ -43,7 +46,7 @@ After meaningful work, update the affected row, date and next action here, then 
 | B19 | Real take-review connection | In progress | Artifact review exists; connect verified originals, generation receipts and scene continuity review. |
 | B20 | Final film rendering | In progress | Rough-cut timeline/review/export exist; render the complete MP4 with approved takes, audio, captions and credits. |
 | B21 | Manual-upload delivery bundle | In progress | Writing skills exist; connect title/thumbnail, description, eligible chapters/Shorts and archive to the finished video. |
-| B22 | Local regression and independent code review | Done | November8: 178 tests, build, four browser checks and independent reviews passed, including actual local speech. Recheck when relevant code changes. |
+| B22 | Local regression and independent code review | Done | November8: 192 tests/no skips, build, five browser flows and independent backend/UI/final reviews PASS. Two UI findings fixed with real RED/GREEN and scoped signoff; no open Important/Critical issues. This is local research readiness, not real-video acceptance. |
 | B23 | Real twelve-step pilot acceptance | Waiting for input | Depends on production tools/assets, live browser/execution, approved creative versions, exact spending allowance and final playback. |
 | B24 | Proposed third repository | Waiting for input | Need its URL and capability review before deciding integration. Nothing downloaded or integrated. |
 
@@ -104,11 +107,12 @@ Never store passwords, login codes, cookies or lease tokens in this board. Viral
 
 ## What we do next
 
-1. Resolve the pilot's remaining audience/final-voice inputs; select/connect image/page and Blender tools. Temporary dialogue already works; do not rebuild it.
-2. Produce and review the actual premise, comic, screenplay, audio, boards and Blender outputs, using relevant skills.
-3. Verify live Flow/browser compatibility early, then connect guarded generation and original downloads.
-4. Complete final rendering and the manual-upload bundle.
-5. Run and record SDET acceptance of the real video through every required obligation.
+1. Resume checklist item 2: author/review the actual premise, connect real ten-page comic production, adapt the approved comic into the full screenplay and timed shots. Resolve image/page tools and dependent creative inputs; do not rebuild research or temporary dialogue.
+2. Follow the remaining checklist items one at a time: boards/clean references/final audio, Blender, live Flow preflight and guarded generation, original downloads/review, final rendering/upload materials and real pilot acceptance.
+
+Use **Research → ideas** in the Studio sidebar now. Save a request and ask the active agent to research its ID; inspect the report, select an idea and provide audience/style. One saved example is available, with explicit secondary-source/sampling limitations. No real idea selection, creative approval or spending was performed for you.
+
+Evidence:192tests/no skips25.531sec, current build and five browser flows; final optional-voice fix additionally verified blank/populated voice selection and exact retries. See the latest combined validation and research review reports. Changes remain local, unstaged and uncommitted.
 
 Development process: BA requirements → PO acceptance criteria → Developer implementation → SDET verification. Work stays on a local feature branch; the user reviews, commits, creates the PR and merges unless explicitly authorizing a specific action later.
 
